@@ -12,11 +12,9 @@ const Register = () => {
 		setState({ ...state, [name]: value });
 	};
 
-	const alert = (color, text) => {
-		return <div className={`mb-4 px-4 py-[10px] border-l-2 border-${color}-500 bg-${color}-50 text-sm text-${color}-500`}>{text}</div>;
-	};
+	const alert = (color, text) => <div className={`mb-4 px-4 py-[10px] border-l-2 border-${color}-500 bg-${color}-50 text-sm text-${color}-500`}>{text}</div>;
 
-	if (state.error) {
+	if (state.error || state.success) {
 		setTimeout(() => {
 			setState({ ...state, fullname: '', username: '', email: '', password: '', error: false, success: false });
 		}, 2000);

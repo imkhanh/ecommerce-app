@@ -6,8 +6,12 @@ const mongoose = require('mongoose');
 const app = express();
 
 // connect database
+const options = {
+	autoIndex: false,
+	family: 4,
+};
 mongoose
-	.connect(process.env.MONGO_URI)
+	.connect(process.env.MONGO_URI, options)
 	.then(() => {
 		console.log('========= Mongoose connect successfully =========');
 	})
@@ -16,9 +20,13 @@ mongoose
 //middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: false }));
 
 //routes
-app.use('/api', require('./routes/auth.route'));
+app.use('/api', require('./routes/AuthRoutes'));
+app.use('/api/product', require('./routes/ProductRoutes'));
+app.use('/api/category', require('./routes/CategoryRoute'));
 
 //run server
 const PORT = 8000 || process.env.PORT;

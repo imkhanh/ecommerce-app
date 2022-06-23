@@ -1,10 +1,25 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { BsPerson, BsHeart, BsHandbag } from 'react-icons/bs';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { BsPerson, BsHeart, BsHandbag, BsPersonCircle, BsPower, BsSpeedometer } from 'react-icons/bs';
 import { LayoutContext } from './Layout';
+import { Link } from 'react-router-dom';
+import { isAdmin, isAuth, logout } from '../Auth/Auth';
 
 const Header = () => {
+	const menuRef = useRef(null);
 	const { dispatch } = useContext(LayoutContext);
+	const [isVisible, setIsVisible] = useState(false);
+
+	useEffect(() => {
+		const handleClick = (e) => {
+			if (menuRef.current && !menuRef.current.contains(e.target)) {
+				setIsVisible(false);
+			}
+		};
+
+		window.addEventListener('click', handleClick, true);
+
+		return () => window.removeEventListener('click', handleClick, true);
+	}, []);
 
 	return (
 		<header className="h-16 sticky top-0 w-full z-20 bg-white border-b border-gray-100 px-8 md:px-4 flex items-center justify-between">
@@ -44,17 +59,58 @@ const Header = () => {
 				</ul>
 			</div>
 
-			<div className="w-1/3 flex items-center justify-end space-x-12">
+			<div className="w-1/3 flex items-center justify-end space-x-8">
 				<div className="cursor-pointer">
-					<BsHeart className="text-lg" />
+					<BsHeart />
 				</div>
-				<div>
-					<span className="cursor-pointer select-none" onClick={() => dispatch({ type: 'loginRegisterModal', payload: true })}>
-						<BsPerson className="text-lg" />
-					</span>
+				<div ref={menuRef} className="relative">
+					{isAuth() ? (
+						<>
+							<span onClick={() => setIsVisible(!isVisible)} className="cursor-pointer select-none">
+								<BsPersonCircle className="text-lg" />
+							</span>
+							{isVisible && (
+								<ul className="absolute top-12 left-1/2 w-44 h-auto transform -translate-x-1/2 bg-white rounded-sm border border-gray-200 shadow-md z-10">
+									{isAdmin() ? (
+										<li>
+											<Link to="/admin/dashboard" className="px-6 py-3 flex items-center hover:bg-gray-50">
+												<BsSpeedometer />
+												<span className="ml-4 text-xs">Admin</span>
+											</Link>
+										</li>
+									) : (
+										<>
+											<li>
+												<Link to="/user/profile" className="px-6 py-3 flex items-center hover:bg-gray-50">
+													<BsPerson />
+													<span className="ml-4 text-xs">Profile</span>
+												</Link>
+											</li>
+											<li>
+												<Link to="/user/wish-list" className="px-6 py-3 flex items-center hover:bg-gray-50">
+													<BsHeart />
+													<span className="ml-4 text-xs">Wish List</span>
+												</Link>
+											</li>
+										</>
+									)}
+									<li>
+										<div onClick={logout} className="px-6 py-3 flex items-center cursor-pointer hover:bg-gray-50">
+											<BsPower />
+											<span className="ml-4 text-xs">Logout</span>
+										</div>
+									</li>
+								</ul>
+							)}
+						</>
+					) : (
+						<span className="cursor-pointer select-none" onClick={() => dispatch({ type: 'loginRegisterModal', payload: true })}>
+							<BsPerson />
+						</span>
+					)}
 				</div>
 				<div onClick={() => dispatch({ type: 'cartModal', payload: true })} className="relative cursor-pointer select-none">
-					<BsHandbag className="text-lg" />
+					<BsHandbag />
 					<span className="absolute -top-3 -right-3 w-6 h-6 rounded-full bg-black text-white text-sm border-2 border-white grid place-items-center">0</span>
 				</div>
 			</div>

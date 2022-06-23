@@ -8,7 +8,7 @@ const CartProduct = () => {
 
 	return (
 		<div>
-			<div onClick={() => dispatch({ type: 'cartModal', payload: false })} className={`${data.cartModal ? '' : 'hidden'} fixed inset-0 w-full h-full backdrop-blur-sm bg-black/20 z-40`} />
+			<div onClick={() => dispatch({ type: 'cartModal', payload: false })} className={`${data.cartModal ? '' : 'hidden'} fixed inset-0 w-full h-full bg-black opacity-30 z-40`} />
 			<div className={`${data.cartModal ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'} fixed top-0 right-0  max-w-sm w-full h-screen bg-white rounded-sm shadow-xl transform transition-all duration-200 ease-in-out z-50`}>
 				<div className="flex flex-col h-full w-full">
 					<div className="px-4 h-16 flex items-center justify-between border-b border-gray-100">

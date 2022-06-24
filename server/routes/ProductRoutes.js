@@ -21,4 +21,14 @@ router.post('/add-product', upload.any(), ProductControllers.addProduct);
 router.patch('/update-product/:id', upload.any(), ProductControllers.updateProduct);
 router.delete('/delete-product/:id', ProductControllers.deleteProduct);
 
+router.get('/search', ProductControllers.searchByName);
+router.post('/product-by-price', ProductControllers.productByPrice);
+router.post('/product-by-category', ProductControllers.productByCategory);
+
+router.post('/add-cart', ProductControllers.addToCart);
+router.post('/add-wish', ProductControllers.addToWish);
+
+router.post('/add-review', ProductControllers.addReview);
+router.post('/delete-review', ProductControllers.deleteReview);
+
 module.exports = router;

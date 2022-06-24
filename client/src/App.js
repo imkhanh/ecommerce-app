@@ -7,6 +7,7 @@ import { LayoutContext } from './components/Shop/Layout/Layout';
 //shop
 import Home from './components/Shop/Home/Home';
 import Products from './components/Shop/Products/Products';
+import ProductByCategory from './components/Shop/Products/ProductByCategory';
 import SingleProduct from './components/Shop/SingleProduct/SingleProduct';
 
 const App = () => {
@@ -19,6 +20,7 @@ const App = () => {
 					<Route path="/" element={<Home />} />
 					<Route path="/products" element={<Products />} />
 					<Route path="/product/detail/:id" element={<SingleProduct />} />
+					<Route path="/product/category/:cateId" element={<ProductByCategory />} />
 				</Routes>
 			</BrowserRouter>
 		</LayoutContext.Provider>

@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import ProductItem from './ProductItem';
 import { ProductContext } from './Products';
 import { getAllProduct } from './FetchData';
-import ProductSkeleton from './ProductSkeleton';
+import Loading from '../Layout/Loading';
 
 const ProductList = () => {
 	const { data, dispatch } = useContext(ProductContext);
@@ -30,14 +30,17 @@ const ProductList = () => {
 		}
 	};
 
+	if (loading) return <Loading />;
+
 	return (
 		<div className="grid grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-x-3 gap-y-12">
-			{products &&
-				products.length > 0 &&
+			{products && products.length > 0 ? (
 				products.map((product) => {
 					return <ProductItem key={product._id} product={product} />;
-				})}
-			{loading && [1, 2, 3, 4, 5, 6, 7, 8].map((x) => <ProductSkeleton key={x} />)}
+				})
+			) : (
+				<div className="text-sm font-light italic text-black/50">No product found</div>
+			)}
 		</div>
 	);
 };

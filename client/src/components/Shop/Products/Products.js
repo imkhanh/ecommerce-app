@@ -1,6 +1,6 @@
 import React, { createContext, useReducer } from 'react';
-import Layout from '../Layout/Layout';
 import { productReducer, productState } from './ProductContext';
+import Layout from '../Layout/Layout';
 import ProductList from './ProductList';
 import ProductMenu from './ProductMenu';
 

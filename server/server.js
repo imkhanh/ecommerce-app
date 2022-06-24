@@ -6,12 +6,8 @@ const mongoose = require('mongoose');
 const app = express();
 
 // connect database
-const options = {
-	autoIndex: false,
-	family: 4,
-};
 mongoose
-	.connect(process.env.MONGO_URI, options)
+	.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false })
 	.then(() => {
 		console.log('========= Mongoose connect successfully =========');
 	})

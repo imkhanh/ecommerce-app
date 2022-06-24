@@ -6,7 +6,7 @@ import { isAdmin, isAuth, logout } from '../Auth/Auth';
 
 const Header = () => {
 	const menuRef = useRef(null);
-	const { dispatch } = useContext(LayoutContext);
+	const { data, dispatch } = useContext(LayoutContext);
 	const [isVisible, setIsVisible] = useState(false);
 
 	useEffect(() => {
@@ -30,7 +30,7 @@ const Header = () => {
 			</div>
 
 			<div className="w-1/3 flex items-center justify-center">
-				<ul className="flex items-center space-x-12">
+				<ul className="md:hidden flex items-center space-x-12">
 					<li>
 						<Link to="/" className="text-xs uppercase text-black hover:text-gray-700">
 							Home
@@ -111,7 +111,7 @@ const Header = () => {
 				</div>
 				<div onClick={() => dispatch({ type: 'cartModal', payload: true })} className="relative cursor-pointer select-none">
 					<BsHandbag />
-					<span className="absolute -top-3 -right-3 w-6 h-6 rounded-full bg-black text-white text-sm border-2 border-white grid place-items-center">0</span>
+					{data.cartProduct && data.cartProduct.length > 0 && <span className="absolute -top-3 -right-3 w-6 h-6 rounded-full bg-black text-white text-sm border-2 border-white grid place-items-center">{data.cartProduct.length}</span>}
 				</div>
 			</div>
 		</header>

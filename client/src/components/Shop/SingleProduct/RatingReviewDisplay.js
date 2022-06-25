@@ -77,7 +77,7 @@ const RatingReviewDisplay = () => {
 											</p>
 										</div>
 										<div className="mt-3">
-											<p className="text-sm">{item.review}</p>
+											<p className="text-xs">{item.review}</p>
 										</div>
 									</div>
 								</div>

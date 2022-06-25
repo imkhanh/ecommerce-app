@@ -60,9 +60,9 @@ const Header = () => {
 			</div>
 
 			<div className="w-1/3 flex items-center justify-end space-x-8">
-				<div className="cursor-pointer">
+				<Link to="/user/wish-list">
 					<BsHeart />
-				</div>
+				</Link>
 				<div ref={menuRef} className="relative">
 					{isAuth() ? (
 						<>
@@ -79,20 +79,12 @@ const Header = () => {
 											</Link>
 										</li>
 									) : (
-										<>
-											<li>
-												<Link to="/user/profile" className="px-6 py-3 flex items-center hover:bg-gray-50">
-													<BsPerson />
-													<span className="ml-4 text-xs">Profile</span>
-												</Link>
-											</li>
-											<li>
-												<Link to="/user/wish-list" className="px-6 py-3 flex items-center hover:bg-gray-50">
-													<BsHeart />
-													<span className="ml-4 text-xs">Wish List</span>
-												</Link>
-											</li>
-										</>
+										<li>
+											<Link to="/user/profile" className="px-6 py-3 flex items-center hover:bg-gray-50">
+												<BsPerson />
+												<span className="ml-4 text-xs">Profile</span>
+											</Link>
+										</li>
 									)}
 									<li>
 										<div onClick={logout} className="px-6 py-3 flex items-center cursor-pointer hover:bg-gray-50">

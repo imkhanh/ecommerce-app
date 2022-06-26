@@ -5,7 +5,7 @@ import { dashboardReducer, dashboardState } from './DashboardContext';
 export const DashboardContext = createContext();
 
 const DashboardComponent = () => {
-	return <div className="p-8">DashboardComponent</div>;
+	return <section className="p-8">DashboardComponent</section>;
 };
 
 const Dashboard = () => {

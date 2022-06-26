@@ -22,6 +22,28 @@ const productController = {
 			console.log(error);
 		}
 	},
+	editCategory: async (req, res) => {
+		try {
+			const { name, description, status } = req.body;
+			if (!(name && description && status)) return res.json({ error: 'Please fill all the fields' });
+
+			const updateCategory = await Categories.findByIdAndUpdate({ _id: req.params.id }, { name, description, status }, { new: true });
+			if (updateCategory) {
+				return res.json({ success: 'Category updated successfully' });
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	},
+	deleteCategory: async (req, res) => {
+		try {
+			await Categories.findByIdAndDelete(req.params.id);
+
+			return res.json({ success: 'Category deleted successfully' });
+		} catch (error) {
+			console.log(error);
+		}
+	},
 };
 
 module.exports = productController;

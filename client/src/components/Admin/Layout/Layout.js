@@ -4,9 +4,9 @@ import Sidebar from './Sidebar';
 
 const Layout = ({ children }) => {
 	return (
-		<div className="bg-white grid grid-cols-12">
+		<div className="bg-white flex">
 			<Sidebar />
-			<div className="col-span-10">
+			<div className="w-[85%] bg-white">
 				<Header />
 				{children}
 			</div>

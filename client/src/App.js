@@ -18,6 +18,7 @@ import RequireAdmin from './components/Shop/Auth/RequireAdmin';
 //admin
 import AdminDashboard from './components/Admin/Dashboard/Dashboard';
 import AdminProducts from './components/Admin/Products/Products';
+import AdminCategories from './components/Admin/Categories/Categories';
 
 const App = () => {
 	const [data, dispatch] = useReducer(layoutReducer, layoutState);
@@ -40,6 +41,7 @@ const App = () => {
 					<Route element={<RequireAdmin />}>
 						<Route path="/admin/dashboard" element={<AdminDashboard />} />
 						<Route path="/admin/products" element={<AdminProducts />} />
+						<Route path="/admin/categories" element={<AdminCategories />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>

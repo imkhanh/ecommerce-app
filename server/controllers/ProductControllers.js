@@ -45,14 +45,8 @@ const productController = {
 		try {
 			const images = req.files;
 			const { name, description, category, price, quantity, offer, status } = req.body;
-			if (!(name && description && category && price && quantity && offer && status)) {
-				deleteImages(images, 'file');
-				return res.json({ error: 'Please fill all the fields' });
-			}
-			if (images.length < 2) {
-				deleteImages(images, 'file');
-				return res.json({ error: 'Must be at least 2 image' });
-			}
+
+			if (images.length < 1) return res.json({ error: 'Must need provide 1 image' });
 
 			const imageArray = [];
 			for (const img of images) {
@@ -66,8 +60,21 @@ const productController = {
 			console.log(error);
 		}
 	},
-	updateProduct: async (req, res) => {
+	editProduct: async (req, res) => {
 		try {
+			const editImages = req.files;
+			const { name, description, category, price, quantity, offer, status, images } = req.body;
+
+			if (editImages.length < 1) return res.json({ error: 'Must need to provide 1 image' });
+
+			const imageArray = [];
+			for (const img of editImages) {
+				imageArray.push(img.filename);
+			}
+
+			await Products.findByIdAndUpdate({ _id: req.params.id }, { images: imageArray, name, description, category, price, quantity, offer, status }, { new: true });
+
+			return res.json({ success: 'Product updated successfully' });
 		} catch (error) {
 			console.log(error);
 		}

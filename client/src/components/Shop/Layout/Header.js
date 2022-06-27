@@ -103,7 +103,11 @@ const Header = () => {
 				</div>
 				<div onClick={() => dispatch({ type: 'cartModal', payload: true })} className="relative cursor-pointer select-none">
 					<BsHandbag />
-					{data.cartProduct && data.cartProduct.length > 0 && <span className="absolute -top-3 -right-3 w-6 h-6 rounded-full bg-black text-white text-sm border-2 border-white grid place-items-center">{data.cartProduct.length}</span>}
+					{data.cartProduct && data.cartProduct.length > 0 && (
+						<span className="absolute -top-3 -right-3 w-6 h-6 rounded-full bg-black text-white text-sm border-2 border-white grid place-items-center">
+							{data.cartProduct.length}
+						</span>
+					)}
 				</div>
 			</div>
 		</header>

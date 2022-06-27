@@ -18,10 +18,10 @@ export const categoryReducer = (state = categoryState, action) => {
 			return { ...state, categories: action.payload };
 		case 'addCategoryModal':
 			return { ...state, addCategoryModal: action.payload };
-		case 'addCategoryModalOpen':
+		case 'editCategoryModalOpen':
 			return {
 				...state,
-				addCategoryModal: {
+				editCategoryModal: {
 					modal: true,
 					id: action.payload.id,
 					name: action.payload.name,
@@ -29,10 +29,10 @@ export const categoryReducer = (state = categoryState, action) => {
 					status: action.payload.status,
 				},
 			};
-		case 'addCategoryModalClose':
+		case 'editCategoryModalClose':
 			return {
 				...state,
-				addCategoryModal: {
+				editCategoryModal: {
 					modal: false,
 					id: '',
 					name: '',

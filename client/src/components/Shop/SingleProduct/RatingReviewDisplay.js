@@ -90,7 +90,11 @@ const RatingReviewDisplay = () => {
 						);
 					})
 				) : (
-					<div>Be the first reivew</div>
+					<div>
+						<p className="font-light text-black/80">
+							Be the first reivew <span className="text-black font-medium">{data.singleProduct.name}</span>
+						</p>
+					</div>
 				)}
 			</div>
 		</div>

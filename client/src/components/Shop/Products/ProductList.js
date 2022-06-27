@@ -10,7 +10,6 @@ const ProductList = () => {
 
 	useEffect(() => {
 		fetchData();
-
 		// eslint-disable-next-line
 	}, []);
 

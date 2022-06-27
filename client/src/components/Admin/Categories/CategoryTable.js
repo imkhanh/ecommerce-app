@@ -15,7 +15,6 @@ const CategoryTable = () => {
 
 	const fetchData = async () => {
 		dispatch({ type: 'loading', payload: true });
-
 		try {
 			const res = await getAllCategories();
 			if (res && res.categories) {
@@ -38,14 +37,18 @@ const CategoryTable = () => {
 		}
 	};
 
+	const handleEditCategory = (id, category) => {
+		dispatch({ type: 'editCategoryModalOpen', payload: { id, ...category } });
+	};
+
 	if (loading) return <Loading />;
 
 	return (
-		<div>
-			<div className="py-2">
+		<div className="mt-4">
+			<div className="mb-2">
 				<h4 className="text-sm font-light text-black/50">{categories && categories.length} categories</h4>
 			</div>
-			<div className="mt-4 overflow-x-auto shadow-md">
+			<div className="overflow-x-auto shadow-md">
 				<table className="min-w-full text-sm border border-gray-100 rounded">
 					<thead className="border-b border-gray-200">
 						<tr>
@@ -77,10 +80,15 @@ const CategoryTable = () => {
 										<td className="p-4 text-black/80 whitespace-nowrap">{dayjs(item.updatedAt).format('DD/MM/YYYY')}</td>
 
 										<td className="p-4 text-black/80 whitespace-nowrap space-x-2">
-											<span className="px-3 py-1.5 text-xs bg-gray-200 border border-gray-200 text-black rounded font-medium cursor-pointer">Edit</span>
+											<span
+												onClick={() => handleEditCategory(item._id, item)}
+												className="px-3 py-1.5 text-xs bg-gray-200 border border-gray-200 text-black rounded font-medium cursor-pointer select-none"
+											>
+												Edit
+											</span>
 											<span
 												onClick={() => handleDeleteCategory(item._id)}
-												className="px-3 py-1.5 text-xs bg-white border border-red-500 text-red-500 font-medium rounded cursor-pointer"
+												className="px-3 py-1.5 text-xs bg-white border border-red-500 text-red-500 font-medium rounded cursor-pointer select-none"
 											>
 												Delete
 											</span>

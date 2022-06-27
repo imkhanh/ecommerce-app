@@ -46,15 +46,15 @@ const UserWishListComponent = () => {
 			</div>
 
 			<div className=" mt-4 overflow-x-auto">
-				<table className="min-w-full text-sm divide-y divide-gray-200">
+				<table className="min-w-full text-sm divide-y divide-gray-200 border border-gray-200 rounded-sm">
 					<thead>
 						<tr>
-							<th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap">Image</th>
-							<th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap">Name</th>
-							<th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap">Category</th>
-							<th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap">Price</th>
-							<th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap">Status</th>
-							<th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap">Actions</th>
+							<th className="py-3 px-4 font-medium text-left text-gray-900 whitespace-nowrap">Image</th>
+							<th className="py-3 px-4 font-medium text-left text-gray-900 whitespace-nowrap">Name</th>
+							<th className="py-3 px-4 font-medium text-left text-gray-900 whitespace-nowrap">Category</th>
+							<th className="py-3 px-4 font-medium text-left text-gray-900 whitespace-nowrap">Price</th>
+							<th className="py-3 px-4 font-medium text-left text-gray-900 whitespace-nowrap">Status</th>
+							<th className="py-3 px-4 font-medium text-left text-gray-900 whitespace-nowrap">Actions</th>
 						</tr>
 					</thead>
 					<tbody className="divide-y divide-gray-100">
@@ -70,7 +70,10 @@ const UserWishListComponent = () => {
 										<td className="p-4 text-gray-700 whitespace-nowrap">${product.price}</td>
 										<td className="p-4 text-gray-700 whitespace-nowrap">
 											{data.inCart !== null && data.inCart.includes(product._id) ? (
-												<strong onClick={() => dispatch({ type: 'cartModal', payload: true })} className="bg-green-100 text-green-700 px-3 py-1.5 rounded text-xs font-medium cursor-pointer select-none">
+												<strong
+													onClick={() => dispatch({ type: 'cartModal', payload: true })}
+													className="bg-green-100 text-green-700 px-3 py-1.5 rounded text-xs font-medium cursor-pointer select-none"
+												>
 													In cart
 												</strong>
 											) : (
@@ -78,10 +81,16 @@ const UserWishListComponent = () => {
 											)}
 										</td>
 										<td className="py-4 text-gray-700 whitespace-nowrap space-x-2">
-											<span onClick={() => navigate(`/product/detail/${product._id}`)} className="px-3 py-1.5 text-xs bg-gray-200 border border-gray-200 text-black rounded font-medium cursor-pointer">
+											<span
+												onClick={() => navigate(`/product/detail/${product._id}`)}
+												className="px-3 py-1.5 text-xs bg-gray-200 border border-gray-200 text-black rounded font-medium cursor-pointer"
+											>
 												View
 											</span>
-											<span onClick={() => handleDelete(product._id)} className="px-3 py-1.5 text-xs bg-white border border-red-500 text-red-500 font-medium rounded cursor-pointer">
+											<span
+												onClick={() => handleDelete(product._id)}
+												className="px-3 py-1.5 text-xs bg-white border border-red-500 text-red-500 font-medium rounded cursor-pointer"
+											>
 												Delete
 											</span>
 										</td>

@@ -1,10 +1,39 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { CategoryContext } from './Categories';
-import { postAddCategory } from './FetchData';
+import { patchEditCategory, getAllCategories } from './FetchData';
 
 const EditCategoryModal = () => {
 	const { data, dispatch } = useContext(CategoryContext);
-	const [state, setState] = useState({ name: '', description: '', status: 'Active', error: '', success: '' });
+	const [state, setState] = useState({ id: '', name: '', description: '', status: 'Active', error: '', success: '' });
+
+	useEffect(() => {
+		setState({
+			id: data.editCategoryModal.id,
+			name: data.editCategoryModal.name,
+			description: data.editCategoryModal.description,
+			status: data.editCategoryModal.status,
+		});
+
+		// eslint-disable-next-line
+	}, [data.editCategoryModal.modal]);
+
+	useEffect(() => {
+		fetchData();
+		// eslint-disable-next-line
+	}, []);
+
+	const fetchData = async () => {
+		dispatch({ type: 'loading', payload: true });
+		try {
+			const res = await getAllCategories();
+			if (res && res.categories) {
+				dispatch({ type: 'categories', payload: res.categories });
+				dispatch({ type: 'loading', payload: false });
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	const alert = (type, msg) => {
 		return <div className={`p-3 text-sm bg-${type}-50 text-${type}-500 rounded-sm`}>{msg}</div>;
@@ -26,13 +55,12 @@ const EditCategoryModal = () => {
 		e.target.reset();
 
 		try {
-			const res = await postAddCategory(state);
-
+			const res = await patchEditCategory(state);
 			if (res && res.success) {
-				setState({ ...state, name: '', description: '', status: '', success: res.success, error: false });
-				dispatch({ type: 'addCategoryModal', payload: false });
+				dispatch({ type: 'editCategoryModalClose', payload: false });
+				fetchData();
 			} else {
-				setState({ ...state, name: '', description: '', status: '', success: false, error: res.success });
+				setState({ ...state, name: '', description: '', status: '', success: false, error: res.error });
 			}
 		} catch (error) {
 			console.log(error);
@@ -42,10 +70,10 @@ const EditCategoryModal = () => {
 	return (
 		<div>
 			<div
-				onClick={() => dispatch({ type: 'addCategoryModal', payload: false })}
-				className={`${data.addCategoryModal ? '' : 'hidden'} fixed inset-0 bg-black opacity-30 z-10`}
+				onClick={() => dispatch({ type: 'editCategoryModalClose', payload: false })}
+				className={`${data.editCategoryModal.modal ? '' : 'hidden'} fixed inset-0 bg-black opacity-30 z-10`}
 			></div>
-			<div className={`${data.addCategoryModal ? '' : 'hidden'} fixed top-16 left-1/2 transform -translate-x-1/2 bg-white max-w-md w-full rounded-sm shadow-lg z-30`}>
+			<div className={`${data.editCategoryModal.modal ? '' : 'hidden'} fixed top-16 left-1/2 transform -translate-x-1/2 bg-white max-w-md w-full rounded-sm shadow-lg z-30`}>
 				<div className="h-16 flex items-center justify-center">
 					<h4 className="uppercase font-bold text-lg text-black">Edit Category</h4>
 				</div>

@@ -46,11 +46,11 @@ const ProductTable = () => {
 	if (loading) return <Loading />;
 
 	return (
-		<div>
-			<div className="py-2">
+		<div className="mt-4">
+			<div className="mb-2">
 				<h4 className="text-sm font-light text-black/50">{products && products.length} products</h4>
 			</div>
-			<div className="mt-4 overflow-x-auto shadow-md">
+			<div className=" overflow-x-auto shadow-md">
 				<table className="min-w-full text-sm border border-gray-100 rounded">
 					<thead className="border-b border-gray-200">
 						<tr>
@@ -90,7 +90,7 @@ const ProductTable = () => {
 												{product.status}
 											</strong>
 										</td>
-										<td className="p-4 text-black/80 whitespace-nowrap">{product.quantity}</td>
+										<td className="p-4 text-black/80 whitespace-nowrap">x{product.quantity}</td>
 										<td className="p-4 text-black/80 whitespace-nowrap">{product.offer}%</td>
 										<td className="p-4 text-black/80 whitespace-nowrap">{dayjs(product.createdAt).format('DD/MM/YYYY')}</td>
 										<td className="p-4 text-black/80 whitespace-nowrap">{dayjs(product.updatedAt).format('DD/MM/YYYY')}</td>

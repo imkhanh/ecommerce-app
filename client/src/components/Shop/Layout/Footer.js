@@ -6,7 +6,11 @@ const Footer = () => {
 	return (
 		<footer className="mt-64 text-white bg-black grid grid-cols-5">
 			<aside className="lg:hidden relative col-span-2 block">
-				<img className="absolute inset-0 object-cover w-full h-full" src="https://images.unsplash.com/photo-1624456735729-03594a40c5fb" alt="Comic Graphic" />
+				<img
+					className="absolute inset-0 object-cover w-full h-full"
+					src="https://static.nike.com/a/images/f_auto,cs_srgb/w_960,c_limit/3dcd862e-9bb4-466a-af53-897001cf82dd/jordan.jpg"
+					alt="Comic Graphic"
+				/>
 			</aside>
 			<div className="sm:px-4 py-16 lg:px-6 px-8 col-span-3 lg:col-span-5">
 				<div className="grid sm:grid-cols-1 gap-8 grid-cols-2">
@@ -97,8 +101,9 @@ const Footer = () => {
 						<p className="sm:mt-4 mt-0">© 2022 e-Commerce shop.</p>
 					</div>
 					<p className="mt-8 text-xs text-gray-500">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus mollitia quia quod repellendus. Porro harum, odio dolore perspiciatis praesentium provident esse consequatur quibusdam aperiam, cupiditate omnis modi in quasi? In, maxime odio
-						vel repellat sed earum? Debitis quaerat facilis animi. Odio natus nostrum laboriosam impedit magnam praesentium asperiores consectetur ipsum.
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus mollitia quia quod repellendus. Porro harum, odio dolore perspiciatis praesentium provident esse
+						consequatur quibusdam aperiam, cupiditate omnis modi in quasi? In, maxime odio vel repellat sed earum? Debitis quaerat facilis animi. Odio natus nostrum
+						laboriosam impedit magnam praesentium asperiores consectetur ipsum.
 					</p>
 				</div>
 			</div>

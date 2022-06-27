@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { BsPlusCircleDotted } from 'react-icons/bs';
 import AddCategoryModal from './AddCategoryModal';
-// import EditCategoryModal from './EditCategoryModal';
+import EditCategoryModal from './EditCategoryModal';
 import { CategoryContext } from './Categories';
 
 const CategoryMenu = () => {
@@ -15,7 +15,7 @@ const CategoryMenu = () => {
 			</button>
 
 			<AddCategoryModal />
-			{/* <EditCategoryModal /> */}
+			<EditCategoryModal />
 		</div>
 	);
 };

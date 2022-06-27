@@ -44,7 +44,11 @@ const SearchDropdown = () => {
 	};
 
 	return (
-		<div className={`${data.searchDropdown ? 'h-28 opacity-100 pointer-events-auto border-gray-200' : 'h-0 opacity-0 pointer-events-none border-white'} border-t transition-all duration-300 ease-in-out`}>
+		<div
+			className={`${
+				data.searchDropdown ? 'h-28 opacity-100 pointer-events-auto border-gray-200' : 'h-0 opacity-0 pointer-events-none border-white'
+			} border-t transition-all duration-300 ease-in-out`}
+		>
 			<div className="py-4 flex items-start justify-between">
 				<span className="block text-sm font-medium">Filter by search</span>
 				<span onClick={handleClose} className="text-sm font-light text-black/50 underline cursor-pointer">
@@ -55,7 +59,13 @@ const SearchDropdown = () => {
 				<span className="absolute top-1/2 left-2 transform -translate-y-1/2 text-black/50">
 					<BsSearch />
 				</span>
-				<input type="text" placeholder="Search" value={query} onChange={handleChange} className="pl-10 text-sm w-full h-11 border-b border-black outline-none  focus:border-black/50 transition-colors" />
+				<input
+					type="text"
+					placeholder="Search"
+					value={query}
+					onChange={handleChange}
+					className="pl-10 text-sm w-full h-11 border-b border-black outline-none  focus:border-black/50 transition-colors"
+				/>
 			</div>
 		</div>
 	);
@@ -85,18 +95,26 @@ const CategoryDropdown = () => {
 	};
 
 	return (
-		<div className={`${data.categoryDropdown ? 'h-28 opacity-100 pointer-events-auto border-gray-200' : 'h-0 opacity-0 pointer-events-none border-white'} border-t transition-all duration-300 ease-in-out`}>
+		<div
+			className={`${
+				data.categoryDropdown ? 'h-28 opacity-100 pointer-events-auto border-gray-200' : 'h-0 opacity-0 pointer-events-none border-white'
+			} border-t transition-all duration-300 ease-in-out`}
+		>
 			<div className="py-4 flex items-start justify-between">
 				<span className="text-sm font-medium">Filter by category</span>
 				<span onClick={handleClose} className="text-sm font-light text-black/50 underline cursor-pointer">
 					Close
 				</span>
 			</div>
-			<div className="flex flex-wrap  overflow-x-auto">
+			<div className="flex flex-wrap space-x-2 overflow-x-auto">
 				{categories.length > 0 ? (
 					categories.map((item) => {
 						return (
-							<span onClick={() => navigate(`/product/category/${item._id}`)} key={item._id} className="px-4 py-[6px] rounded-full bg-gray-50 text-sm text-black border border-gray-200 hover:bg-black hover:text-white cursor-pointer transition-colors">
+							<span
+								onClick={() => navigate(`/product/category/${item._id}`)}
+								key={item._id}
+								className="px-4 py-[4px] rounded-full bg-gray-50 text-sm text-black border border-gray-200 hover:bg-black hover:text-white cursor-pointer transition-colors"
+							>
 								{item.name}
 							</span>
 						);
@@ -147,7 +165,11 @@ const PriceDropdown = () => {
 	};
 
 	return (
-		<div className={`${data.priceDropdown ? 'h-28 opacity-100 pointer-events-auto border-gray-200' : 'h-0 opacity-0 pointer-events-none border-white'} border-t transition-all duration-300 ease-in-out`}>
+		<div
+			className={`${
+				data.priceDropdown ? 'h-28 opacity-100 pointer-events-auto border-gray-200' : 'h-0 opacity-0 pointer-events-none border-white'
+			} border-t transition-all duration-300 ease-in-out`}
+		>
 			<div className="py-4 flex items-start justify-between">
 				<div>
 					<span className="block text-sm font-medium">Filter by price</span>

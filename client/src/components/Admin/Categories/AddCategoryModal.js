@@ -1,10 +1,28 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { CategoryContext } from './Categories';
-import { postAddCategory } from './FetchData';
+import { postAddCategory, getAllCategories } from './FetchData';
 
 const AddCategoryModal = () => {
 	const { data, dispatch } = useContext(CategoryContext);
 	const [state, setState] = useState({ name: '', description: '', status: 'Active', error: '', success: '' });
+
+	useEffect(() => {
+		fetchData();
+		// eslint-disable-next-line
+	}, []);
+
+	const fetchData = async () => {
+		dispatch({ type: 'loading', payload: true });
+		try {
+			const res = await getAllCategories();
+			if (res && res.categories) {
+				dispatch({ type: 'categories', payload: res.categories });
+				dispatch({ type: 'loading', payload: false });
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	const alert = (type, msg) => {
 		return <div className={`p-3 text-sm bg-${type}-50 text-${type}-500 rounded-sm`}>{msg}</div>;
@@ -12,7 +30,7 @@ const AddCategoryModal = () => {
 
 	if (state.error || state.success) {
 		setTimeout(() => {
-			setState({ ...state, name: '', description: '', status: '', success: false, error: false });
+			setState({ ...state, name: '', description: '', status: 'Active', success: false, error: false });
 		}, 2000);
 	}
 
@@ -29,10 +47,11 @@ const AddCategoryModal = () => {
 			const res = await postAddCategory(state);
 
 			if (res && res.success) {
-				setState({ ...state, name: '', description: '', status: '', success: res.success, error: false });
+				setState({ ...state, name: '', description: '', status: 'Active', success: res.success, error: false });
 				dispatch({ type: 'addCategoryModal', payload: false });
+				fetchData();
 			} else {
-				setState({ ...state, name: '', description: '', status: '', success: false, error: res.success });
+				setState({ ...state, name: '', description: '', status: 'Active', success: false, error: res.success });
 			}
 		} catch (error) {
 			console.log(error);

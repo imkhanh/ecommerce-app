@@ -5,7 +5,7 @@ import { ProductContext } from './Products';
 const AddProductModal = () => {
 	const { data, dispatch } = useContext(ProductContext);
 	const [categories, setCategories] = useState([]);
-	const [state, setState] = useState({ name: '', description: '', category: '', price: 0, quantity: 0, offer: '', status: 'Active', images: null, error: '', success: '' });
+	const [state, setState] = useState({ name: '', description: '', category: '', price: 0, quantity: 0, offer: 0, status: 'Active', images: null, error: '', success: '' });
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -27,7 +27,7 @@ const AddProductModal = () => {
 
 	if (state.error || state.success) {
 		setTimeout(() => {
-			setState({ ...state, name: '', description: '', category: '', price: 0, quantity: 0, offer: '', status: '', images: null, success: false, error: false });
+			setState({ ...state, name: '', description: '', category: '', price: 0, quantity: 0, offer: 0, status: '', images: null, success: false, error: false });
 		}, 2000);
 	}
 
@@ -43,9 +43,9 @@ const AddProductModal = () => {
 		try {
 			const res = await postAddProduct(state);
 			if (res && res.success) {
-				setState({ ...state, name: '', description: '', category: '', price: 0, quantity: 0, offer: '', status: '', images: null, success: res.success, error: false });
+				setState({ ...state, name: '', description: '', category: '', price: 0, quantity: 0, offer: 0, status: '', images: null, success: res.success, error: false });
 			} else {
-				setState({ ...state, name: '', description: '', category: '', price: 0, quantity: 0, offer: '', status: '', images: null, success: false, error: res.error });
+				setState({ ...state, name: '', description: '', category: '', price: 0, quantity: 0, offer: 0, status: '', images: null, success: false, error: res.error });
 			}
 		} catch (error) {
 			console.log(error);

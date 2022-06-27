@@ -18,7 +18,7 @@ export const postAddCategory = async (formData) => {
 	}
 };
 
-export const patchAddCategory = async (formData) => {
+export const patchEditCategory = async (formData) => {
 	try {
 		const res = await axios.patch(`/api/category/edit-category/${formData.id}`, formData);
 		return res.data;

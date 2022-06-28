@@ -41,6 +41,17 @@ const productController = {
 			console.log(error);
 		}
 	},
+	getLatestProduct: async (req, res) => {
+		try {
+			const products = await Products.find({}).populate('category', '_id name').limit(4).sort('-createdAt');
+			if (!products) {
+				return res.json({ error: 'Product does not exists' });
+			}
+			return res.json({ products });
+		} catch (error) {
+			console.log(error);
+		}
+	},
 	addProduct: async (req, res) => {
 		try {
 			const images = req.files;
@@ -55,7 +66,7 @@ const productController = {
 			const newProduct = new Products({ images: imageArray, name, description, category, price, quantity, offer, status });
 			await newProduct.save();
 
-			return res.json({ success: 'Success', product: newProduct });
+			return res.json({ success: 'Product created successfully', product: newProduct });
 		} catch (error) {
 			console.log(error);
 		}

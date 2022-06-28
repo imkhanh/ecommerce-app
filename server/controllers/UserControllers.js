@@ -58,6 +58,8 @@ const userController = {
 	deleteUser: async (req, res) => {
 		try {
 			await Users.findByIdAndDelete(req.params.id);
+
+			return res.json({ success: 'User deleted successfully' });
 		} catch (error) {
 			console.log(error);
 		}

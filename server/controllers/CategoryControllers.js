@@ -17,7 +17,7 @@ const productController = {
 			const newCategory = new Categories({ name, description, status, image });
 
 			await newCategory.save();
-			return res.json({ category: newCategory });
+			return res.json({ success: 'Category added successfully', category: newCategory });
 		} catch (error) {
 			console.log(error);
 		}

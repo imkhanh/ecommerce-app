@@ -16,6 +16,7 @@ const upload = multer({ storage: storage });
 
 router.get('/get-all', ProductControllers.getAllProducts);
 router.get('/get-single/:id', ProductControllers.getSingleProduct);
+router.get('/get-latest', ProductControllers.getLatestProduct);
 
 router.post('/add-product', upload.any(), ProductControllers.addProduct);
 router.patch('/edit-product/:id', upload.any(), ProductControllers.editProduct);

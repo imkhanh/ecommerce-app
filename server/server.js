@@ -24,6 +24,7 @@ app.use('/api', require('./routes/AuthRoutes'));
 app.use('/api/product', require('./routes/ProductRoutes'));
 app.use('/api/category', require('./routes/CategoryRoute'));
 app.use('/api/user', require('./routes/UserRoutes'));
+app.use('/api/customize', require('./routes/CustomizeRoutes'));
 
 //run server
 const PORT = 8000 || process.env.PORT;

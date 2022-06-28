@@ -27,7 +27,8 @@ const LatestProducts = () => {
 		<div className="mt-16">
 			<h4 className="text-3xl md:text-2xl">Latest Products</h4>
 			<div className="mt-8 grid grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-x-3 gap-y-12">
-				{products && products.length > 0 ? (
+				{products &&
+					products.length > 0 &&
 					products.map((product) => {
 						return (
 							<Link to={`/product/detail/${product._id}`} key={product._id}>
@@ -41,10 +42,7 @@ const LatestProducts = () => {
 								</div>
 							</Link>
 						);
-					})
-				) : (
-					<div className="text-sm font-light italic text-black/50">No product found</div>
-				)}
+					})}
 			</div>
 		</div>
 	);

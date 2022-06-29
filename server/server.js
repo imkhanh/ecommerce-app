@@ -7,10 +7,13 @@ const app = express();
 
 // connect database
 mongoose
-	.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false })
-	.then(() => {
-		console.log('========= Mongoose connect successfully =========');
+	.connect(process.env.MONGO_URI, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+		useCreateIndex: true,
+		useFindAndModify: false,
 	})
+	.then(() => console.log('========= Mongoose connect successfully ========='))
 	.catch((err) => console.log('Database not connect'));
 
 //middleware
@@ -20,11 +23,7 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
 
 //routes
-app.use('/api', require('./routes/AuthRoutes'));
-app.use('/api/product', require('./routes/ProductRoutes'));
-app.use('/api/category', require('./routes/CategoryRoute'));
-app.use('/api/user', require('./routes/UserRoutes'));
-app.use('/api/customize', require('./routes/CustomizeRoutes'));
+// app.use('/api', require('./routes/AuthRoutes'));
 
 //run server
 const PORT = 8000 || process.env.PORT;

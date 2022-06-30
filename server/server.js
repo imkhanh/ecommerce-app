@@ -23,7 +23,9 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
 
 //routes
-// app.use('/api', require('./routes/AuthRoutes'));
+app.use('/api', require('./routes/auth'));
+app.use('/api/product', require('./routes/products'));
+app.use('/api/category', require('./routes/categories'));
 
 //run server
 const PORT = 8000 || process.env.PORT;

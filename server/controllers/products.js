@@ -30,7 +30,7 @@ const productController = {
 	},
 	getSingleProduct: async (req, res) => {
 		try {
-			const product = await Products.findById(req.params.id).populate('category', '_id title');
+			const product = await Products.findById(req.params.id).populate('category', '_id title').populate('ratingReviews.user', '_id name email');
 			if (product) return res.json({ product });
 		} catch (error) {
 			console.log(error);
@@ -40,6 +40,7 @@ const productController = {
 		try {
 			const images = req.files;
 			const { title, category, description, colors, sizes, price, quantity, offer, status } = req.body;
+
 			if (!(title && category && description && price && quantity)) {
 				deleteImages(images, 'file');
 				return res.json({ error: 'Please fill all the fields' });
@@ -49,13 +50,15 @@ const productController = {
 				deleteImages(images, 'file');
 				return res.json({ error: 'Must to provide 2 images' });
 			}
-			const allImage = [];
 
+			const allImage = [];
 			for (const img of images) {
 				allImage.push(img.filename);
 			}
 
-			const newProduct = new Products({ title, images: allImage, category, description, colors, sizes, price, quantity, offer, status });
+			const discount = Math.round(((offer - price) / price) * 100).toString();
+
+			const newProduct = new Products({ title, images: allImage, category, description, colors, sizes, price, discountPrice: discount, quantity, offer, status });
 			await newProduct.save();
 
 			return res.json({ success: 'Product added successfully', products: newProduct });
@@ -105,8 +108,48 @@ const productController = {
 			console.log(error);
 		}
 	},
-	addReview: async (req, res) => {},
-	deleteReview: async (req, res) => {},
+	addReview: async (req, res) => {
+		try {
+			const { pId, uId, rating, review } = req.body;
+
+			if (!pId || !uId || !rating || !review) return res.json({ error: 'Please fill all the fields' });
+
+			const product = await Products.findOne({ _id: pId });
+			product.ratingReviews.map((item) => {
+				if (item.user === uId) {
+					return res.json({ error: 'You already reviewed the product' });
+				}
+			});
+
+			const newReview = await Products.findByIdAndUpdate(pId, {
+				$push: {
+					ratingReviews: {
+						user: uId,
+						rating: rating,
+						review: review,
+					},
+				},
+			});
+			await newReview.save();
+			return res.json({ success: 'Thanks for your review' });
+		} catch (error) {
+			console.log(error);
+		}
+	},
+	deleteReview: async (req, res) => {
+		try {
+			const { rId, pId } = req.body;
+
+			if (!rId || !pId) return res.json({ error: 'Please fill all the fields' });
+
+			await Products.findByIdAndUpdate(pId, {
+				$pull: { ratingReviews: { _id: rId } },
+			});
+			return res.json({ error: 'Review deleted successfully' });
+		} catch (error) {
+			console.log(error);
+		}
+	},
 };
 
 module.exports = productController;

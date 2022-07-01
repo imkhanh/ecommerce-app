@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
 import { BsGear, BsHandbag, BsHeart, BsPerson, BsPersonCircle, BsReceipt, BsSearch, BsShieldLock } from 'react-icons/bs';
+import { Link, useLocation } from 'react-router-dom';
 import { LayoutContext } from './Layout';
 import { isAdmin, isAuth, logout } from '../Auth/Authentication';
 
 const Header = () => {
 	const menuRef = useRef(null);
 	const location = useLocation();
-	const { dispatch } = useContext(LayoutContext);
+	const { state, dispatch } = useContext(LayoutContext);
 	const [isVisible, setIsVisible] = useState(false);
 
 	useEffect(() => {
@@ -123,7 +123,7 @@ const Header = () => {
 					</div>
 					<div onClick={() => dispatch({ type: 'cartModal', payload: true })} className="relative cursor-pointer select-none">
 						<BsHandbag />
-						<span className="absolute -top-3 -right-3 w-6 h-6 rounded-full flex items-center justify-center border-2 border-white bg-black text-sm text-white">0</span>
+						{state.cartProduct && state.cartProduct.length > 0 && <span className="absolute -top-3 -right-3 w-6 h-6 rounded-full flex items-center justify-center border-2 border-white bg-black text-sm text-white">{state.cartProduct.length}</span>}
 					</div>
 				</div>
 			</div>

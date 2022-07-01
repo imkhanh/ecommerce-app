@@ -7,6 +7,7 @@ import Layout, { LayoutContext } from '../Layout/Layout';
 import { Link, useParams } from 'react-router-dom';
 import { isAuth } from '../Auth/Authentication';
 import RatingReviews from './RatingReviews';
+import Loading from '../Layout/Loading';
 
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
@@ -21,6 +22,7 @@ const SingleProductSection = () => {
 	const [quantity, setQuantity] = useState(1);
 	const [readMore, setReadMore] = useState(false);
 	const [alert, setAlert] = useState(false);
+	const [showDelivery, setShowDelivery] = useState(false);
 	const [size, setSize] = useState('');
 	const [color, setColor] = useState('');
 
@@ -34,11 +36,13 @@ const SingleProductSection = () => {
 
 		try {
 			const res = await getSingleProduct(id);
-			if (res && res.product) {
-				dispatch({ type: 'singleProduct', payload: res.product });
-				dispatch({ type: 'loading', payload: false });
-				dispatch({ type: 'inCart', payload: cartList() });
-			}
+			setTimeout(() => {
+				if (res && res.product) {
+					dispatch({ type: 'singleProduct', payload: res.product });
+					dispatch({ type: 'loading', payload: false });
+					dispatch({ type: 'inCart', payload: cartList() });
+				}
+			}, 1000);
 		} catch (error) {
 			console.log(error);
 		}
@@ -57,26 +61,24 @@ const SingleProductSection = () => {
 		}
 	};
 
-	const handlChangeSize = (item) => setSize(item);
-	const handlChangeColor = (item) => setColor(item);
-
 	if (state.loading) {
-		return <div>Loading</div>;
+		return <Loading />;
 	} else if (!product) {
 		return <div>No product found</div>;
 	}
 
 	return (
-		<section className="py-12 px-8 md:px-4 max-w-[70rem] mx-auto">
+		<section className="py-12 px-8 md:px-4 max-w-[80rem] mx-auto">
 			<div className="mb-4 flex items-center space-x-2">
-				<Link to="/" className="text-sm text-slate-500">
+				<Link to="/" className="text-sm font-light text-[#888]">
 					Home
 				</Link>
-				<span className="text-sm text-slate-500">
+				<span className="text-sm text-[#888]">
 					<BsChevronRight />
 				</span>
 				<span className="text-sm text-black cursor-pointer">{product && product.title}</span>
 			</div>
+
 			<div className="grid grid-cols-5 md:grid-cols-1">
 				<div className="col-span-3">
 					<div className="md:hidden grid grid-cols-2 md:grid-cols-1 gap-3">
@@ -111,19 +113,28 @@ const SingleProductSection = () => {
 						</span>
 					</div>
 				</div>
-				<div className="col-span-2 ml-12 lg:ml-6 md:ml-0 md:mt-12 sticky top-0 h-auto z-10">
+				<div className="col-span-2 ml-16 lg:ml-10 md:ml-0 md:mt-12 sticky top-20 h-auto z-10">
 					<div className="space-y-8">
 						<div className="pb-4 border-b border-gray-200 flex items-center justify-between">
 							<div>
-								<h1 className="text-black font-semibold text-2xl">{product.title}</h1>
-								<p className="mt-1 text-sm">{product.category.title}</p>
-								<p className="mt-2 font-medium">$ {product.price}</p>
+								<h1 className="text-black font-semibold text-3xl">{product.title}</h1>
+								<p>{product.category.title}</p>
+								{product.offer ? (
+									<div className="mt-4 flex items-center text-black font-light space-x-2">
+										<span className="text-black">{product.discountPrice}$</span>
+										<span className="text-black/30 line-through">{product.discountPrice}$</span>
+										<p className="font-medium text-green-700">{product.offer}% off</p>
+									</div>
+								) : (
+									<p className="mt-3 text-black font-light">{product.price}$</p>
+								)}
 							</div>
 							<span className="text-lg text-black/70 cursor-pointer select-none">
 								<BsShare />
 							</span>
 						</div>
 
+						{/*Sizes*/}
 						<div>
 							<span className="mb-2 block text-sm font-medium">Select size</span>
 							<div className="grid grid-cols-4 lg:grid-cols-3 md:grid-cols-5 gap-2">
@@ -132,8 +143,10 @@ const SingleProductSection = () => {
 										return (
 											<span
 												key={index}
-												onClick={() => handlChangeSize(item)}
-												className={`${item === size ? 'border-black' : 'border-[#ccc]'} flex items-center justify-center px-8 py-2 rounded-md border hover:border-black cursor-pointer select-none transition-colors`}
+												onClick={() => setSize(item)}
+												className={`${
+													item === size ? 'border-black text-black' : 'border-[#ccc] text-black/70'
+												} hover:text-black flex items-center justify-center px-8 py-2 rounded-md border hover:border-black cursor-pointer select-none transition-colors`}
 											>
 												{item}
 											</span>
@@ -142,6 +155,7 @@ const SingleProductSection = () => {
 							</div>
 						</div>
 
+						{/*Colors*/}
 						<div>
 							<span className="mb-2 block text-sm font-medium">Select color</span>
 							<div className="grid grid-cols-4 lg:grid-cols-3 md:grid-cols-5 gap-2">
@@ -150,8 +164,10 @@ const SingleProductSection = () => {
 										return (
 											<span
 												key={index}
-												onClick={() => handlChangeColor(item)}
-												className={`${item === color ? 'border-black' : 'border-[#ccc]'} flex items-center justify-center px-8 py-2 rounded-md border hover:border-black cursor-pointer select-none transition-colors`}
+												onClick={() => setColor(item)}
+												className={`${
+													item === color ? 'border-black text-black' : 'border-[#ccc] text-black/70'
+												} hover:text-black flex items-center justify-center px-8 py-2 rounded-md border hover:border-black cursor-pointer select-none transition-colors`}
 											>
 												{item}
 											</span>
@@ -163,17 +179,17 @@ const SingleProductSection = () => {
 						{product.quantity !== 0 && (
 							<div>
 								<span className="block mb-2 text-sm font-medium">Quantity: {product.quantity}</span>
-								<div className="flex items-center">
+								<div className="flex items-center select-none cursor-pointer ">
 									<span
 										onClick={() => updateQuantity('decrease', product.quantity, quantity, setQuantity, setAlert)}
-										className="select-none cursor-pointer text-sm w-6 h-6 rounded-full bg-white text-black border border-black/40 hover:border-black flex items-center justify-center"
+										className="px-6 py-[2px] rounded-md bg-white text-black border border-black/40 hover:border-black flex items-center justify-center transition-colors"
 									>
 										-
 									</span>
-									<span className="w-10 text-center text-sm">{quantity}</span>
+									<span className="w-12 text-center">{quantity}</span>
 									<span
 										onClick={() => updateQuantity('increase', product.quantity, quantity, setQuantity, setAlert)}
-										className="select-none cursor-pointer text-sm w-6 h-6 rounded-full bg-white text-black border border-black/40 hover:border-black flex items-center justify-center"
+										className="px-6 py-[2px] rounded-md bg-white text-black border border-black/40 hover:border-black flex items-center justify-center transition-colors"
 									>
 										+
 									</span>
@@ -200,7 +216,10 @@ const SingleProductSection = () => {
 											Please login to buy
 										</button>
 									) : (
-										<button className="w-full h-14 font-medium border border-black bg-black text-white rounded-full" onClick={() => addToCart(product._id, product.price, size, color, quantity, setQuantity, setSize, setColor, dispatch, fetchData)}>
+										<button
+											className="w-full h-14 font-medium border border-black bg-black text-white rounded-full"
+											onClick={() => addToCart(product._id, product.price, product.discountPrice, size, color, quantity, setQuantity, setSize, setColor, dispatch, fetchData)}
+										>
 											Add to cart
 										</button>
 									)}
@@ -218,8 +237,8 @@ const SingleProductSection = () => {
 						</div>
 
 						<div>
-							<span className="mb-2 block text-sm font-medium underline underline-offset-2">Description</span>
-							<p className="text-sm text-black/80 font-light text-justify leading-6">
+							<span className="mb-4 block text-sm font-medium cursor-pointer underline underline-offset-2">View Description</span>
+							<p className="text-black/80 font-light text-justify leading-6">
 								{product.description.length < 140 ? product.description : readMore ? product.description + '' : product.description.slice(0, 140) + '... '}
 
 								{product.description.length > 140 && (
@@ -231,11 +250,27 @@ const SingleProductSection = () => {
 						</div>
 					</div>
 
-					<div className="mt-8 py-4 border-y border-gray-200 flex items-center justify-between cursor-pointer select-none">
-						<span className="text-black text-lg">Free Delivery and Returns</span>
-						<span className="text-lg">
-							<BsChevronUp />
-						</span>
+					<div className="mt-8 py-4 border-y border-gray-200 ">
+						<div onClick={() => setShowDelivery(!showDelivery)} className="flex items-center justify-between cursor-pointer select-none">
+							<span className="text-black font-medium text-lg">Free Delivery and Returns</span>
+							<span className="text-lg">
+								<BsChevronUp />
+							</span>
+						</div>
+						{showDelivery && (
+							<div className="py-6 space-y-8 text-black/80 font-light">
+								<p>Your order of $300 or more gets free standard delivery.</p>
+								<ol className="ml-4 list-disc">
+									<li>Standard delivered 4-5 Business Days</li>
+									<li>Express delivered 2-4 Business Days</li>
+								</ol>
+
+								<p>Orders are processed and delivered Monday-Friday (excluding public holidays)</p>
+								<p>
+									Nike Members enjoy <span className="cursor-pointer font-medium underline">free returns.</span>
+								</p>
+							</div>
+						)}
 					</div>
 
 					<RatingReviews />

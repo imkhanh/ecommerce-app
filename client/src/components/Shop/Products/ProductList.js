@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { isWish, addWishListProduct, removeWishListProduct } from './Minxins';
+import { BsHeart, BsHeartFill } from 'react-icons/bs';
 import { ProductContext } from './Products';
 import { getAllProduct } from './FetchData';
-import { BsHeart, BsHeartFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
-import { isWish, addWishListProduct, removeWishListProduct } from './Minxins';
+import Loading from '../Layout/Loading';
 
 const ProductList = () => {
 	const { state, dispatch } = useContext(ProductContext);
@@ -12,43 +13,69 @@ const ProductList = () => {
 	const [wishList, setWishList] = useState(JSON.parse(localStorage.getItem('wish')));
 
 	useEffect(() => {
-		getAllProduct(dispatch);
+		fetchData();
+
 		// eslint-disable-next-line
 	}, []);
 
-	if (loading) return <div>Loading</div>;
+	const fetchData = async () => {
+		dispatch({ type: 'loading', payload: true });
+		try {
+			const res = await getAllProduct();
+
+			if (res && res.products) {
+				dispatch({ type: 'products', payload: res.products });
+				dispatch({ type: 'loading', payload: false });
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	if (loading) return <Loading />;
 
 	return (
-		<div className="mt-8 grid grid-cols-4 gap-x-4 gap-y-16">
+		<div className="mt-8 grid grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-x-4 gap-y-16 transition-all duration-300 ease-in-out">
 			{products && products.length > 0 ? (
 				products.map((product) => {
 					return (
 						<div key={product._id} className="relative bg-white">
-							<div className="absolute top-2 right-2 z-[5]">
-								<span onClick={() => addWishListProduct(product._id, setWishList)} className={`${isWish(product._id, wishList) && 'hidden'} text-black cursor-pointer select-none`}>
+							<div className="absolute top-3 right-3 z-[5]">
+								<span onClick={() => addWishListProduct(product._id, setWishList)} className={`${isWish(product._id, wishList) && 'hidden'} text-black w-8 h-8 bg-white rounded-full grid place-items-center cursor-pointer select-none`}>
 									<BsHeart />
 								</span>
-								<span onClick={() => removeWishListProduct(product._id, setWishList)} className={`${!isWish(product._id, wishList) && 'hidden'} text-red-500 cursor-pointer select-none`}>
+								<span onClick={() => removeWishListProduct(product._id, setWishList)} className={`${!isWish(product._id, wishList) && 'hidden'} text-white w-8 h-8 bg-red-500 rounded-full grid place-items-center cursor-pointer select-none`}>
 									<BsHeartFill />
 								</span>
 							</div>
 							<figure>
 								<Link to={`/product/detail/${product._id}`}>
-									<img src={`http://localhost:3000/uploads/products/${product.images[0]}`} alt={product.name} className="w-full h-[300px] object-cover" />
+									<img src={`http://localhost:3000/uploads/products/${product.images[0]}`} alt={product.name} className="w-full h-[360px] lg:[h-300px] md:h-full object-cover" />
 								</Link>
 							</figure>
-							<div className="mt-4 text-xs text-center font-light text-[#888]">
-								<div className="mb-2 flex items-center justify-center space-x-1">
-									{product.colors &&
-										product.colors.map((item, index) => {
-											return <span key={index} className="w-3 h-3 cursor-pointer border border-gray-200" style={{ background: `${item}` }}></span>;
-										})}
-								</div>
+							<div className="mt-4">
 								<Link to={`/product/detail/${product._id}`} className="text-black">
 									{product.title}
 								</Link>
-								<p className="mt-2 text-[#888]">{product.category.title}</p>
-								<p className="mt-1 text-black text-sm font-medium">$ {product.price}</p>
+								<p className="text-black/50 font-light">{product.category.title}</p>
+								<div className="mt-1 flex space-x-1">
+									{product &&
+										product.colors.map((item, index) => {
+											return <span key={index} className="block w-3 h-3 border border-black/30 cursor-pointer" style={{ background: `${item}` }} />;
+										})}
+								</div>
+
+								{product.offer ? (
+									<div className="mt-4 flex flex-col space-y-2">
+										<p className="text-black font-light space-x-2">
+											<span className="text-black">{product.discountPrice}$</span>
+											<span className="text-black/30 line-through">{product.discountPrice}$</span>
+										</p>
+										<p className="font-medium text-green-700">{product.offer}% off</p>
+									</div>
+								) : (
+									<p className="mt-3 text-black font-light">{product.price}$</p>
+								)}
 							</div>
 						</div>
 					);

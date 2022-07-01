@@ -12,7 +12,7 @@ const Products = () => {
 	return (
 		<ProductContext.Provider value={{ state, dispatch }}>
 			<Layout>
-				<section className="py-12 px-8 md:px-4 max-w-[70rem] mx-auto">
+				<section className="py-12 px-8 md:px-4 max-w-[80rem] mx-auto">
 					<ProductMenu />
 					<ProductList />
 				</section>

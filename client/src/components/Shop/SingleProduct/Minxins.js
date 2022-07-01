@@ -36,18 +36,26 @@ export const totalPrice = () => {
 	const cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
 
 	cart.forEach((item) => {
-		total += item.price * item.quantity;
+		if (item.discountPrice) {
+			total += item.discountPrice * item.quantity;
+		} else {
+			total += item.price * item.quantity;
+		}
 	});
 	return total;
 };
 
-export const subTotalPrice = (id, price) => {
+export const subTotalPrice = (id, price, discountPrice) => {
 	let total = 0;
 	const cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
 
 	cart.forEach((item) => {
 		if (item.id === id) {
-			total = item.quantity * price;
+			if (item.discountPrice) {
+				total = item.quantity * discountPrice;
+			} else {
+				total = item.quantity * price;
+			}
 		}
 	});
 	return total;
@@ -71,7 +79,7 @@ export const getType = (id) => {
 
 	cart.forEach((item) => {
 		if (item.id === id) {
-			type = `Color: ${item.color}` + ' - ' + `Size: ${item.size}`;
+			type = item.color + ' - ' + item.size;
 		}
 	});
 	return type;
@@ -103,7 +111,7 @@ export const inCart = (id) => {
 	}
 };
 
-export const addToCart = (id, price, size, color, quantity, setQuantity, setSize, setColor, dispatch, fetchData) => {
+export const addToCart = (id, price, discountPrice, size, color, quantity, setQuantity, setSize, setColor, dispatch, fetchData) => {
 	let isObj = false;
 	const cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
 
@@ -115,13 +123,19 @@ export const addToCart = (id, price, size, color, quantity, setQuantity, setSize
 		});
 
 		if (!isObj) {
-			cart.push({ id, price, size, color, quantity });
-			localStorage.setItem('cart', JSON.stringify(cart));
+			if (discountPrice) {
+				cart.push({ id, discountPrice, size, color, quantity });
+				localStorage.setItem('cart', JSON.stringify(cart));
+			} else {
+				cart.push({ id, price, size, color, quantity });
+				localStorage.setItem('cart', JSON.stringify(cart));
+			}
 		}
-	} else {
-		cart.push({ id, price, size, color, quantity });
-		localStorage.setItem('cart', JSON.stringify(cart));
 	}
+	// else {
+	// 	cart.push({ id, price, size, color, quantity });
+	// 	localStorage.setItem('cart', JSON.stringify(cart));
+	// }
 
 	setColor('');
 	setSize('');

@@ -8,6 +8,9 @@ import { layoutState, layoutReducer } from './components/Shop/Layout/LayoutConte
 import Home from './components/Shop/Home/Home';
 import Products from './components/Shop/Products/Products';
 import SingleProduct from './components/Shop/SingleProduct/SingleProduct';
+import UserProfile from './components/Shop/Dashboard/UserProfile';
+import UserWishList from './components/Shop/Dashboard/UserWishList';
+import UserChangePassword from './components/Shop/Dashboard/UserChangePassword';
 
 const App = () => {
 	const [state, dispatch] = useReducer(layoutReducer, layoutState);
@@ -19,6 +22,10 @@ const App = () => {
 					<Route path="/" element={<Home />} />
 					<Route path="/products" element={<Products />} />
 					<Route path="/product/detail/:id" element={<SingleProduct />} />
+
+					<Route path="/user/profile" element={<UserProfile />} />
+					<Route path="/user/wish-list" element={<UserWishList />} />
+					<Route path="/user/change-password" element={<UserChangePassword />} />
 				</Routes>
 			</BrowserRouter>
 		</LayoutContext.Provider>

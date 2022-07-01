@@ -56,7 +56,7 @@ const ReviewForm = () => {
 			{reviewList.includes(isAuth().user._id) ? (
 				''
 			) : (
-				<div>
+				<div className="mt-8">
 					<div className="flex flex-col">
 						<span className="text-lg font-medium">Add a review</span>
 						<span className="text-[#888] text-sm font-light italic">* Your email address will not be published. Required fields are marked</span>
@@ -90,11 +90,11 @@ const ReviewForm = () => {
 							onChange={(e) => {
 								setForm({ ...form, review: e.target.value });
 							}}
-							rows={4}
+							rows={5}
 							placeholder="Write a review"
 							className="p-2 w-full h-auto text-sm border border-black/30 hover:border-black outline-none rounded-sm"
 						/>
-						<button onClick={() => handleSubmit()} type="button" className="px-4 py-2 bg-black text-white text-sm font-medium rounded-sm">
+						<button type="button" onClick={handleSubmit} className="px-4 py-2 bg-black text-white text-sm font-medium rounded-sm">
 							Submit
 						</button>
 					</div>

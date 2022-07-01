@@ -100,9 +100,9 @@ const productController = {
 
 			const products = await Products.find({
 				_id: { $in: wishProduct },
-			});
+			}).populate('category', '_id title');
 			if (products) {
-				return res.jon({ products });
+				return res.json({ products });
 			}
 		} catch (error) {
 			console.log(error);
@@ -145,7 +145,7 @@ const productController = {
 			await Products.findByIdAndUpdate(pId, {
 				$pull: { ratingReviews: { _id: rId } },
 			});
-			return res.json({ error: 'Review deleted successfully' });
+			return res.json({ success: 'Review deleted successfully' });
 		} catch (error) {
 			console.log(error);
 		}

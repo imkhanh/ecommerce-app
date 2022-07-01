@@ -9,8 +9,8 @@ const AuthModal = () => {
 	const [showPass, setShowPass] = useState(false);
 	const [form, setForm] = useState({ name: '', email: '', password: '', error: '', success: '' });
 
-	const alert = (color, text) => {
-		return <div className={`mb-4 px-4 h-10 flex items-center text-sm border-l-2 border-${color}-700 bg-${color}-100 text-${color}-700 rounded-[3px]`}>{text}</div>;
+	const alert = (color, msg) => {
+		return <div className={`mb-4 px-4 h-10 flex items-center text-sm border-l-2 border-${color}-700 bg-${color}-100 text-${color}-700 rounded-[3px]`}>{msg}</div>;
 	};
 
 	if (form.success || form.error) {
@@ -44,7 +44,7 @@ const AuthModal = () => {
 
 	return (
 		<div>
-			<div onClick={() => dispatch({ type: 'authModal', payload: false })} className={`${state.authModal ? '' : 'hidden'} fixed inset-0 bg-black opacity-30 z-20`}></div>
+			<div onClick={() => dispatch({ type: 'authModal', payload: false })} className={`${state.authModal ? '' : 'hidden'} fixed inset-0 bg-black opacity-50 z-20`}></div>
 			<div className={`${state.authModal ? '' : 'hidden'} fixed top-1/2 left-1/2 max-w-sm w-full h-auto bg-white rounded shadow-lg transform -translate-x-1/2 -translate-y-1/2 z-30`}>
 				<div className="px-12 py-8">
 					<div className="mb-8 text-center space-y-3">

@@ -92,7 +92,7 @@ const Header = () => {
 						{menuLinks.map((link) => {
 							return (
 								<li key={link.index}>
-									<Link to={`${link.to}`} className={`${activeLink(link.to)} block text-xs uppercase text-[#2b313a] border-b leading-[56px] hover:text-black hover:border-black transition-colors`}>
+									<Link to={`${link.to}`} className={`${activeLink(link.to)} block text-xs uppercase  border-b leading-[56px] text-black hover:text-black/70 hover:border-black transition-colors`}>
 										{link.label}
 									</Link>
 								</li>
@@ -104,9 +104,9 @@ const Header = () => {
 					<div>
 						<BsSearch />
 					</div>
-					<div>
+					<Link to="/user/wish-list">
 						<BsHeart />
-					</div>
+					</Link>
 					<div ref={menuRef} className="relative">
 						{isAuth() ? (
 							<>

@@ -9,7 +9,6 @@ import Loading from '../Layout/Loading';
 const ProductList = () => {
 	const { state, dispatch } = useContext(ProductContext);
 	const { products, loading } = state;
-
 	const [wishList, setWishList] = useState(JSON.parse(localStorage.getItem('wish')));
 
 	useEffect(() => {
@@ -22,7 +21,6 @@ const ProductList = () => {
 		dispatch({ type: 'loading', payload: true });
 		try {
 			const res = await getAllProduct();
-
 			if (res && res.products) {
 				dispatch({ type: 'products', payload: res.products });
 				dispatch({ type: 'loading', payload: false });
@@ -50,18 +48,18 @@ const ProductList = () => {
 							</div>
 							<figure>
 								<Link to={`/product/detail/${product._id}`}>
-									<img src={`http://localhost:3000/uploads/products/${product.images[0]}`} alt={product.name} className="w-full h-[360px] lg:[h-300px] md:h-full object-cover" />
+									<img src={`http://localhost:3000/uploads/products/${product.images[0]}`} alt={product.name} className="w-full h-full object-cover" />
 								</Link>
 							</figure>
 							<div className="mt-4">
-								<Link to={`/product/detail/${product._id}`} className="text-black">
+								<Link to={`/product/detail/${product._id}`} className="text-black font-medium">
 									{product.title}
 								</Link>
 								<p className="text-black/50 font-light">{product.category.title}</p>
 								<div className="mt-1 flex space-x-1">
 									{product &&
 										product.colors.map((item, index) => {
-											return <span key={index} className="block w-3 h-3 border border-black/30 cursor-pointer" style={{ background: `${item}` }} />;
+											return <span key={index} className="block w-[10px] h-[10px] border border-black/30 cursor-pointer" style={{ background: `${item}` }} />;
 										})}
 								</div>
 

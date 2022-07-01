@@ -79,7 +79,7 @@ export const getType = (id) => {
 
 	cart.forEach((item) => {
 		if (item.id === id) {
-			type = item.color + ' - ' + item.size;
+			type = item.size + ' - ' + item.color;
 		}
 	});
 	return type;

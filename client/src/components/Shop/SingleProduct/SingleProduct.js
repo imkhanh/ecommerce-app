@@ -70,10 +70,10 @@ const SingleProductSection = () => {
 	return (
 		<section className="py-12 px-8 md:px-4 max-w-[80rem] mx-auto">
 			<div className="mb-4 flex items-center space-x-2">
-				<Link to="/" className="text-sm font-light text-[#888]">
+				<Link to="/" className="text-sm font-light text-black/50">
 					Home
 				</Link>
-				<span className="text-sm text-[#888]">
+				<span className="text-sm text-black/50">
 					<BsChevronRight />
 				</span>
 				<span className="text-sm text-black cursor-pointer">{product && product.title}</span>
@@ -113,7 +113,7 @@ const SingleProductSection = () => {
 						</span>
 					</div>
 				</div>
-				<div className="col-span-2 ml-16 lg:ml-10 md:ml-0 md:mt-12 sticky top-20 h-auto z-10">
+				<div className="col-span-2 ml-16 lg:ml-10 md:ml-0 md:mt-12 sticky top-0 bg-white z-10">
 					<div className="space-y-8">
 						<div className="pb-4 border-b border-gray-200 flex items-center justify-between">
 							<div>
@@ -182,23 +182,23 @@ const SingleProductSection = () => {
 								<div className="flex items-center select-none cursor-pointer ">
 									<span
 										onClick={() => updateQuantity('decrease', product.quantity, quantity, setQuantity, setAlert)}
-										className="px-6 py-[2px] rounded-md bg-white text-black border border-black/40 hover:border-black flex items-center justify-center transition-colors"
+										className="px-4 py-[2px] rounded-md bg-white text-black border border-black/40 hover:border-black flex items-center justify-center transition-colors"
 									>
 										-
 									</span>
 									<span className="w-12 text-center">{quantity}</span>
 									<span
 										onClick={() => updateQuantity('increase', product.quantity, quantity, setQuantity, setAlert)}
-										className="px-6 py-[2px] rounded-md bg-white text-black border border-black/40 hover:border-black flex items-center justify-center transition-colors"
+										className="px-4 py-[2px] rounded-md bg-white text-black border border-black/40 hover:border-black flex items-center justify-center transition-colors"
 									>
 										+
 									</span>
 								</div>
 
 								{alert && (
-									<div className="mt-4 p-4 flex items-center justify-between text-[#888] border-b border-black/30 bg-[#fafafa]">
-										<span className="text-xs">Stock limited</span>
-										<span onClick={() => setAlert(false)} className="text-xs cursor-pointer select-none">
+									<div className="mt-4 p-4 flex items-center justify-between text-red-500 border-b border-red-500 bg-red-50">
+										<span className="text-sm">Stock limited</span>
+										<span onClick={() => setAlert(false)} className="text-sm cursor-pointer select-none">
 											Close
 										</span>
 									</div>

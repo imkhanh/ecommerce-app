@@ -5,9 +5,12 @@ import { ProductContext } from './Products';
 import { getAllProduct } from './FetchData';
 import { Link } from 'react-router-dom';
 import Loading from '../Layout/Loading';
+import { isAuth } from '../Auth/Authentication';
+import { LayoutContext } from '../Layout/Layout';
 
 const ProductList = () => {
 	const { state, dispatch } = useContext(ProductContext);
+	const { dispatch: layoutDispatch } = useContext(LayoutContext);
 	const { products, loading } = state;
 	const [wishList, setWishList] = useState(JSON.parse(localStorage.getItem('wish')));
 
@@ -39,40 +42,41 @@ const ProductList = () => {
 					return (
 						<div key={product._id} className="relative bg-white">
 							<div className="absolute top-3 right-3 z-[5]">
-								<span onClick={() => addWishListProduct(product._id, setWishList)} className={`${isWish(product._id, wishList) && 'hidden'} text-black w-8 h-8 bg-white rounded-full grid place-items-center cursor-pointer select-none`}>
-									<BsHeart />
-								</span>
-								<span onClick={() => removeWishListProduct(product._id, setWishList)} className={`${!isWish(product._id, wishList) && 'hidden'} text-white w-8 h-8 bg-red-500 rounded-full grid place-items-center cursor-pointer select-none`}>
-									<BsHeartFill />
-								</span>
+								{isAuth() ? (
+									<>
+										<span onClick={() => addWishListProduct(product._id, setWishList)} className={`${isWish(product._id, wishList) && 'hidden'} text-black w-8 h-8 bg-white rounded-full grid place-items-center cursor-pointer select-none`}>
+											<BsHeart />
+										</span>
+										<span onClick={() => removeWishListProduct(product._id, setWishList)} className={`${!isWish(product._id, wishList) && 'hidden'} text-white w-8 h-8 bg-red-500 rounded-full grid place-items-center cursor-pointer select-none`}>
+											<BsHeartFill />
+										</span>
+									</>
+								) : (
+									<span onClick={() => layoutDispatch({ type: 'authModal', payload: true })} className="text-black w-8 h-8 bg-white rounded-full grid place-items-center cursor-pointer select-none">
+										<BsHeart />
+									</span>
+								)}
 							</div>
 							<figure>
 								<Link to={`/product/detail/${product._id}`}>
 									<img src={`http://localhost:3000/uploads/products/${product.images[0]}`} alt={product.name} className="w-full h-full object-cover" />
 								</Link>
 							</figure>
-							<div className="mt-4">
+							<div className="pt-4">
 								<Link to={`/product/detail/${product._id}`} className="text-black font-medium">
 									{product.title}
 								</Link>
-								<p className="text-black/50 font-light">{product.category.title}</p>
-								<div className="mt-1 flex space-x-1">
-									{product &&
-										product.colors.map((item, index) => {
-											return <span key={index} className="block w-[10px] h-[10px] border border-black/30 cursor-pointer" style={{ background: `${item}` }} />;
-										})}
-								</div>
-
-								{product.offer ? (
-									<div className="mt-4 flex flex-col space-y-2">
-										<p className="text-black font-light space-x-2">
-											<span className="text-black">{product.discountPrice}$</span>
-											<span className="text-black/30 line-through">{product.discountPrice}$</span>
+								<div className="text-black/50 font-light">{product.category.title}</div>
+								{product.discount ? (
+									<div className="pt-3 flex flex-col">
+										<p className="text-black font-light space-x-3">
+											<span className="text-black font-medium">{product.price_discount}$</span>
+											<span className="text-black/30 line-through">{product.price}$</span>
 										</p>
-										<p className="font-medium text-green-700">{product.offer}% off</p>
+										<p className="mt-1 font-medium text-green-700">{product.discount}% off</p>
 									</div>
 								) : (
-									<p className="mt-3 text-black font-light">{product.price}$</p>
+									<div className="pt-3 text-black font-medium">{product.price}$</div>
 								)}
 							</div>
 						</div>

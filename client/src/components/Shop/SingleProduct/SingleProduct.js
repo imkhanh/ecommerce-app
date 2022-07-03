@@ -1,16 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { BsChevronLeft, BsChevronRight, BsChevronUp, BsHeart, BsHeartFill, BsShare } from 'react-icons/bs';
+import { BsChevronDown, BsChevronLeft, BsChevronRight, BsChevronUp, BsHeart, BsHeartFill, BsShare } from 'react-icons/bs';
 import { changeSlide, updateQuantity, addToCart, cartList } from './Minxins';
 import { isWish, addWishListProduct, removeWishListProduct } from '../Products/Minxins';
 import { getSingleProduct, postAddToCart } from './FetchData';
 import Layout, { LayoutContext } from '../Layout/Layout';
 import { Link, useParams } from 'react-router-dom';
-import { isAuth } from '../Auth/Authentication';
+import { isAdmin, isAuth } from '../Auth/Authentication';
 import RatingReviews from './RatingReviews';
 import Loading from '../Layout/Loading';
 
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
+import Slogan from '../Home/Slogan';
 
 const SingleProductSection = () => {
 	const { id } = useParams();
@@ -23,8 +24,6 @@ const SingleProductSection = () => {
 	const [readMore, setReadMore] = useState(false);
 	const [alert, setAlert] = useState(false);
 	const [showDelivery, setShowDelivery] = useState(false);
-	const [size, setSize] = useState('');
-	const [color, setColor] = useState('');
 
 	useEffect(() => {
 		fetchData();
@@ -36,13 +35,12 @@ const SingleProductSection = () => {
 
 		try {
 			const res = await getSingleProduct(id);
-			setTimeout(() => {
-				if (res && res.product) {
-					dispatch({ type: 'singleProduct', payload: res.product });
-					dispatch({ type: 'loading', payload: false });
-					dispatch({ type: 'inCart', payload: cartList() });
-				}
-			}, 1000);
+			if (res && res.product) {
+				dispatch({ type: 'singleProduct', payload: res.product });
+				dispatch({ type: 'inCart', payload: cartList() });
+
+				dispatch({ type: 'loading', payload: false });
+			}
 		} catch (error) {
 			console.log(error);
 		}
@@ -68,7 +66,7 @@ const SingleProductSection = () => {
 	}
 
 	return (
-		<section className="py-12 px-8 md:px-4 max-w-[80rem] mx-auto">
+		<section className="pt-12 pb-32 px-8 md:px-4 max-w-[80rem] mx-auto">
 			<div className="mb-4 flex items-center space-x-2">
 				<Link to="/" className="text-sm font-light text-black/50">
 					Home
@@ -79,9 +77,9 @@ const SingleProductSection = () => {
 				<span className="text-sm text-black cursor-pointer">{product && product.title}</span>
 			</div>
 
-			<div className="grid grid-cols-5 md:grid-cols-1">
-				<div className="col-span-3">
-					<div className="md:hidden grid grid-cols-2 md:grid-cols-1 gap-3">
+			<div className="flex md:flex-col">
+				<div className="w-2/3 lg:w-3/5 md:w-full">
+					<div className={`md:hidden grid ${product.images.length !== 2 ? 'grid-cols-2 md:grid-cols-1' : 'grid-cols-1'} gap-3`}>
 						{product &&
 							product.images.length > 0 &&
 							product.images.map((img, index) => {
@@ -113,20 +111,21 @@ const SingleProductSection = () => {
 						</span>
 					</div>
 				</div>
-				<div className="col-span-2 ml-16 lg:ml-10 md:ml-0 md:mt-12 sticky top-0 bg-white z-10">
-					<div className="space-y-8">
+				<div className="w-1/3 lg:w-2/5 md:w-full ml-16 lg:ml-12 md:ml-0 md:mt-12 sticky top-20 bg-white">
+					<div className="space-y-12">
+						{/* ============ Product detail ============ */}
 						<div className="pb-4 border-b border-gray-200 flex items-center justify-between">
 							<div>
 								<h1 className="text-black font-semibold text-3xl">{product.title}</h1>
-								<p>{product.category.title}</p>
-								{product.offer ? (
-									<div className="mt-4 flex items-center text-black font-light space-x-2">
-										<span className="text-black">{product.discountPrice}$</span>
-										<span className="text-black/30 line-through">{product.discountPrice}$</span>
-										<p className="font-medium text-green-700">{product.offer}% off</p>
+								<div>{product.category.title}</div>
+								{product.discount ? (
+									<div className="mt-4 flex items-center text-black font-light space-x-4">
+										<span className="text-black font-medium">{product.price_discount}$</span>
+										<span className="text-black/30 line-through">{product.price}$</span>
+										<p className="font-medium text-green-700">{product.discount}% off</p>
 									</div>
 								) : (
-									<p className="mt-3 text-black font-light">{product.price}$</p>
+									<div className="mt-4 text-black font-medium">{product.price}$</div>
 								)}
 							</div>
 							<span className="text-lg text-black/70 cursor-pointer select-none">
@@ -134,69 +133,42 @@ const SingleProductSection = () => {
 							</span>
 						</div>
 
-						{/*Sizes*/}
+						{/* ============ Description ============ */}
 						<div>
-							<span className="mb-2 block text-sm font-medium">Select size</span>
-							<div className="grid grid-cols-4 lg:grid-cols-3 md:grid-cols-5 gap-2">
-								{product.sizes &&
-									product.sizes.map((item, index) => {
-										return (
-											<span
-												key={index}
-												onClick={() => setSize(item)}
-												className={`${
-													item === size ? 'border-black text-black' : 'border-[#ccc] text-black/70'
-												} hover:text-black flex items-center justify-center px-8 py-2 rounded-md border hover:border-black cursor-pointer select-none transition-colors`}
-											>
-												{item}
-											</span>
-										);
-									})}
-							</div>
+							<span className="mb-3 block text-sm font-medium cursor-pointer">Description</span>
+							<p className="text-black/80 font-light text-justify leading-6">
+								{product.description.length < 190 ? product.description : readMore ? product.description + '' : product.description.slice(0, 190) + '... '}
+
+								{product.description.length > 190 && (
+									<span onClick={() => setReadMore(!readMore)} className="underline underline-offset-2 cursor-pointer select-none">
+										{readMore ? 'hide' : 'read more'}
+									</span>
+								)}
+							</p>
 						</div>
 
-						{/*Colors*/}
-						<div>
-							<span className="mb-2 block text-sm font-medium">Select color</span>
-							<div className="grid grid-cols-4 lg:grid-cols-3 md:grid-cols-5 gap-2">
-								{product.colors &&
-									product.colors.map((item, index) => {
-										return (
-											<span
-												key={index}
-												onClick={() => setColor(item)}
-												className={`${
-													item === color ? 'border-black text-black' : 'border-[#ccc] text-black/70'
-												} hover:text-black flex items-center justify-center px-8 py-2 rounded-md border hover:border-black cursor-pointer select-none transition-colors`}
-											>
-												{item}
-											</span>
-										);
-									})}
-							</div>
-						</div>
-
-						{product.quantity !== 0 && (
+						{/* ============ Quantity ============ */}
+						{product.quantity && (
 							<div>
-								<span className="block mb-2 text-sm font-medium">Quantity: {product.quantity}</span>
-								<div className="flex items-center select-none cursor-pointer ">
+								<span className="block mb-3 text-sm font-medium">Quantity: {product.quantity}</span>
+								<div className="flex items-center select-none">
 									<span
 										onClick={() => updateQuantity('decrease', product.quantity, quantity, setQuantity, setAlert)}
-										className="px-4 py-[2px] rounded-md bg-white text-black border border-black/40 hover:border-black flex items-center justify-center transition-colors"
+										className="px-3.5 py-0.5 rounded-md bg-white text-black border border-black/40 hover:border-black flex items-center justify-center cursor-pointer transition-colors"
 									>
 										-
 									</span>
 									<span className="w-12 text-center">{quantity}</span>
 									<span
 										onClick={() => updateQuantity('increase', product.quantity, quantity, setQuantity, setAlert)}
-										className="px-4 py-[2px] rounded-md bg-white text-black border border-black/40 hover:border-black flex items-center justify-center transition-colors"
+										className="px-3.5 py-0.5 rounded-md bg-white text-black border border-black/40 hover:border-black flex items-center justify-center cursor-pointer transition-colors"
 									>
 										+
 									</span>
 								</div>
 
 								{alert && (
-									<div className="mt-4 p-4 flex items-center justify-between text-red-500 border-b border-red-500 bg-red-50">
+									<div className="mt-4 p-4 flex items-center justify-between text-black/30 border-b border-black/50 bg-[#fafafa]">
 										<span className="text-sm">Stock limited</span>
 										<span onClick={() => setAlert(false)} className="text-sm cursor-pointer select-none">
 											Close
@@ -206,6 +178,7 @@ const SingleProductSection = () => {
 							</div>
 						)}
 
+						{/* ============ Button add to cart ============ */}
 						<div className="space-y-3">
 							{product.quantity && state.inCart !== null && state.inCart.includes(product._id) ? (
 								<button className="w-full h-14 font-medium border border-black bg-black text-white rounded-full">In cart</button>
@@ -215,11 +188,10 @@ const SingleProductSection = () => {
 										<button onClick={() => dispatch({ type: 'authModal', payload: true })} className="w-full h-14 font-medium border border-black bg-black text-white rounded-full">
 											Please login to buy
 										</button>
+									) : isAdmin() ? (
+										<button className="w-full h-14 font-medium border border-black bg-gray-800 text-white rounded-full cursor-not-allowed">Admin can not buy</button>
 									) : (
-										<button
-											className="w-full h-14 font-medium border border-black bg-black text-white rounded-full"
-											onClick={() => addToCart(product._id, product.price, product.discountPrice, size, color, quantity, setQuantity, setSize, setColor, dispatch, fetchData)}
-										>
+										<button className="w-full h-14 font-medium border border-black bg-black text-white rounded-full" onClick={() => addToCart(product._id, product.price, product.price_discount, quantity, setQuantity, dispatch, fetchData)}>
 											Add to cart
 										</button>
 									)}
@@ -235,27 +207,12 @@ const SingleProductSection = () => {
 								<BsHeartFill />
 							</button>
 						</div>
-
-						<div>
-							<span className="mb-4 block text-sm font-medium cursor-pointer underline underline-offset-2">View Description</span>
-							<p className="text-black/80 font-light text-justify leading-6">
-								{product.description.length < 140 ? product.description : readMore ? product.description + '' : product.description.slice(0, 140) + '... '}
-
-								{product.description.length > 140 && (
-									<span onClick={() => setReadMore(!readMore)} className="underline cursor-pointer select-none">
-										{readMore ? 'hide' : 'read more'}
-									</span>
-								)}
-							</p>
-						</div>
 					</div>
 
 					<div className="mt-8 py-4 border-y border-gray-200 ">
 						<div onClick={() => setShowDelivery(!showDelivery)} className="flex items-center justify-between cursor-pointer select-none">
 							<span className="text-black font-medium text-lg">Free Delivery and Returns</span>
-							<span className="text-lg">
-								<BsChevronUp />
-							</span>
+							<span className="text-lg">{showDelivery ? <BsChevronDown /> : <BsChevronUp />}</span>
 						</div>
 						{showDelivery && (
 							<div className="py-6 space-y-8 text-black/80 font-light">
@@ -276,6 +233,8 @@ const SingleProductSection = () => {
 					<RatingReviews />
 				</div>
 			</div>
+
+			<Slogan title="Peace through any pose" subTitle="Yoga Soul Festival Collection" />
 		</section>
 	);
 };

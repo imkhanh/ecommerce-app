@@ -36,8 +36,8 @@ export const totalPrice = () => {
 	const cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
 
 	cart.forEach((item) => {
-		if (item.discountPrice) {
-			total += item.discountPrice * item.quantity;
+		if (item.price_discount) {
+			total += item.price_discount * item.quantity;
 		} else {
 			total += item.price * item.quantity;
 		}
@@ -45,14 +45,14 @@ export const totalPrice = () => {
 	return total;
 };
 
-export const subTotalPrice = (id, price, discountPrice) => {
+export const subTotalPrice = (id, price, price_discount) => {
 	let total = 0;
 	const cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
 
 	cart.forEach((item) => {
 		if (item.id === id) {
-			if (item.discountPrice) {
-				total = item.quantity * discountPrice;
+			if (price_discount) {
+				total = item.quantity * price_discount;
 			} else {
 				total = item.quantity * price;
 			}
@@ -71,18 +71,6 @@ export const totalQuantity = (id) => {
 		}
 	});
 	return total;
-};
-
-export const getType = (id) => {
-	let type = '';
-	const cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
-
-	cart.forEach((item) => {
-		if (item.id === id) {
-			type = item.size + ' - ' + item.color;
-		}
-	});
-	return type;
 };
 
 export const cartList = () => {
@@ -111,7 +99,7 @@ export const inCart = (id) => {
 	}
 };
 
-export const addToCart = (id, price, discountPrice, size, color, quantity, setQuantity, setSize, setColor, dispatch, fetchData) => {
+export const addToCart = (id, price, price_discount, quantity, setQuantity, dispatch, fetchData) => {
 	let isObj = false;
 	const cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
 
@@ -123,24 +111,17 @@ export const addToCart = (id, price, discountPrice, size, color, quantity, setQu
 		});
 
 		if (!isObj) {
-			if (discountPrice) {
-				cart.push({ id, discountPrice, size, color, quantity });
+			if (price_discount) {
+				cart.push({ id, price, price_discount, quantity });
 				localStorage.setItem('cart', JSON.stringify(cart));
 			} else {
-				cart.push({ id, price, size, color, quantity });
+				cart.push({ id, price, quantity });
 				localStorage.setItem('cart', JSON.stringify(cart));
 			}
 		}
 	}
-	// else {
-	// 	cart.push({ id, price, size, color, quantity });
-	// 	localStorage.setItem('cart', JSON.stringify(cart));
-	// }
 
-	setColor('');
-	setSize('');
+	dispatch({ type: 'inCart', payload: cartList() });
 	setQuantity(1);
-
-	dispatch({ type: 'inCart', payload: inCart() });
 	fetchData();
 };

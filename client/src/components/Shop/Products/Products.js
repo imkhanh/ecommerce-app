@@ -6,17 +6,21 @@ import ProductList from './ProductList';
 
 export const ProductContext = createContext();
 
+const ProductComponent = () => {
+	return (
+		<section className="pt-12 pb-32 px-8 md:px-4 max-w-[80rem] mx-auto">
+			<ProductMenu />
+			<ProductList />
+		</section>
+	);
+};
+
 const Products = () => {
 	const [state, dispatch] = useReducer(productReducer, productState);
 
 	return (
 		<ProductContext.Provider value={{ state, dispatch }}>
-			<Layout>
-				<section className="py-12 px-8 md:px-4 max-w-[80rem] mx-auto">
-					<ProductMenu />
-					<ProductList />
-				</section>
-			</Layout>
+			<Layout children={<ProductComponent />} />
 		</ProductContext.Provider>
 	);
 };

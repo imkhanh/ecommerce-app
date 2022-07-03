@@ -39,7 +39,7 @@ const productController = {
 	addProduct: async (req, res) => {
 		try {
 			const images = req.files;
-			const { title, category, description, colors, sizes, price, quantity, offer, status } = req.body;
+			const { title, category, description, price, quantity, discount, status } = req.body;
 
 			if (!(title && category && description && price && quantity)) {
 				deleteImages(images, 'file');
@@ -56,12 +56,12 @@ const productController = {
 				allImage.push(img.filename);
 			}
 
-			const discount = Math.round(((offer - price) / price) * 100).toString();
+			const afterDiscount = Math.round(price - (price * discount) / 100);
 
-			const newProduct = new Products({ title, images: allImage, category, description, colors, sizes, price, discountPrice: discount, quantity, offer, status });
+			const newProduct = new Products({ title, images: allImage, category, description, price, price_discount: afterDiscount, quantity, discount, status });
 			await newProduct.save();
 
-			return res.json({ success: 'Product added successfully', products: newProduct });
+			return res.json({ success: 'Product added successfully', product: newProduct });
 		} catch (error) {
 			console.log(error);
 		}
@@ -86,7 +86,9 @@ const productController = {
 
 			const products = await Products.find({
 				_id: { $in: cartProduct },
-			});
+			})
+				.populate('category', '_id title')
+				.sort('-createdAt');
 			if (products) {
 				return res.json({ products });
 			}
@@ -100,7 +102,10 @@ const productController = {
 
 			const products = await Products.find({
 				_id: { $in: wishProduct },
-			}).populate('category', '_id title');
+			})
+				.populate('category', '_id title')
+				.sort('-createdAt');
+
 			if (products) {
 				return res.json({ products });
 			}

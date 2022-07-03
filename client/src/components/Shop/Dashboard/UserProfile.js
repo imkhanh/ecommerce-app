@@ -52,7 +52,7 @@ const UserProfileComponent = () => {
 	};
 
 	return (
-		<div className="px-8 pb-8">
+		<div className="px-12 md:px-8 pb-8">
 			<div className="py-4 border-b border-gray-200">
 				<h4 className="text-black font-medium">Information</h4>
 				<p className="text-sm text-black/40 font-light">lorem</p>

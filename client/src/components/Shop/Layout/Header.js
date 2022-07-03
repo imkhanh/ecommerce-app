@@ -37,7 +37,7 @@ const Header = () => {
 			<ul className="absolute top-12 -right-12 border border-gray-200 bg-white w-48 h-auto shadow rounded-[3px] z-20">
 				{isAdmin() ? (
 					<li>
-						<Link to="/user/profile" className="px-4 py-2 flex items-center text-black hover:bg-gray-50 transition-colors">
+						<Link to="/admin/dashboard" className="px-4 py-2 flex items-center text-black hover:bg-gray-50 transition-colors">
 							<BsShieldLock className="text-sm" />
 							<span className="ml-4 text-sm">Admin</span>
 						</Link>

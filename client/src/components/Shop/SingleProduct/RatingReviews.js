@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { BsChevronUp } from 'react-icons/bs';
+import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 import { isAuth } from '../Auth/Authentication';
 import { LayoutContext } from '../Layout/Layout';
 import ReviewForm from './ReviewForm';
@@ -15,9 +15,7 @@ const RatingReviews = () => {
 		<div className="py-4 border-b border-gray-200">
 			<div onClick={() => setShowReview(!showReview)} className="flex items-center justify-between cursor-pointer select-none">
 				<span className="text-black font-medium text-lg">Rating reviews ({product && product.ratingReviews.length})</span>
-				<span className="text-lg">
-					<BsChevronUp />
-				</span>
+				<span className="text-lg">{showReview ? <BsChevronDown /> : <BsChevronUp />}</span>
 			</div>
 
 			{showReview && (

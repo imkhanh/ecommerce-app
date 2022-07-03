@@ -44,29 +44,55 @@ const productController = {
 			if (!(title && category && description && price && quantity)) {
 				deleteImages(images, 'file');
 				return res.json({ error: 'Please fill all the fields' });
-			}
-
-			if (images.length < 2) {
+			} else if (images.length < 1) {
 				deleteImages(images, 'file');
 				return res.json({ error: 'Must to provide 2 images' });
+			} else {
+				const allImage = [];
+				for (const img of images) {
+					allImage.push(img.filename);
+				}
+
+				const afterDiscount = Math.round(price - (price * discount) / 100);
+
+				const newProduct = new Products({ title, images: allImage, category, description, price, price_discount: afterDiscount, quantity, discount, status });
+				await newProduct.save();
+
+				return res.json({ success: 'Product added successfully', product: newProduct });
 			}
-
-			const allImage = [];
-			for (const img of images) {
-				allImage.push(img.filename);
-			}
-
-			const afterDiscount = Math.round(price - (price * discount) / 100);
-
-			const newProduct = new Products({ title, images: allImage, category, description, price, price_discount: afterDiscount, quantity, discount, status });
-			await newProduct.save();
-
-			return res.json({ success: 'Product added successfully', product: newProduct });
 		} catch (error) {
 			console.log(error);
 		}
 	},
-	editProduct: async (req, res) => {},
+	editProduct: async (req, res) => {
+		try {
+			const editImages = req.files;
+			const { title, category, images, description, price, quantity, discount, status } = req.body;
+
+			if (!(title && category && description && price && quantity)) {
+				deleteImages(images, 'file');
+				return res.json({ error: 'Please fill all the fields' });
+			} else if (images.length === 1) {
+				deleteImages(images, 'file');
+				return res.json({ error: 'Must to provide 2 images' });
+			} else {
+				let data = { title, category, images, description, price, quantity, discount, status };
+				const allImages = [];
+				for (const img of editImages) {
+					allImages.push(img.filename);
+				}
+				const afterDiscount = Math.round(price - (price * discount) / 100);
+				data = { ...data, images: allImages, price_discount: afterDiscount };
+				deleteImages(images.split(','), 'string');
+
+				const editProduct = await Products.findByIdAndUpdate({ _id: req.params.id }, data, { new: true });
+
+				return res.json({ success: 'Product edited successfully', product: editProduct });
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	},
 	deleteProduct: async (req, res) => {
 		try {
 			const productObj = await Products.findById(req.params.id);

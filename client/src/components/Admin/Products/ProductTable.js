@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { getAllProduct, deleteProduct } from './FetchData';
+import { getAllProducts, deleteProduct } from './FetchData';
 import { AdminProductContext } from './AdminProducts';
 import { BsPencil, BsTrash } from 'react-icons/bs';
 import Loading from '../Layout/Loading';
@@ -18,7 +18,7 @@ const ProductTable = () => {
 	const fetchData = async () => {
 		dispatch({ type: 'loading', payload: true });
 		try {
-			const res = await getAllProduct();
+			const res = await getAllProducts();
 			if (res && res.products) {
 				dispatch({ type: 'products', payload: res.products });
 				dispatch({ type: 'loading', payload: false });
@@ -28,7 +28,7 @@ const ProductTable = () => {
 		}
 	};
 
-	const handleDelete = async (id) => {
+	const handleDeleteProduct = async (id) => {
 		try {
 			const res = await deleteProduct(id);
 			if (res && res.success) {
@@ -39,6 +39,10 @@ const ProductTable = () => {
 		}
 	};
 
+	const handleEditProduct = (id, product) => {
+		dispatch({ type: 'editProductModalOpen', payload: { id, ...product } });
+	};
+
 	if (loading) return <Loading />;
 
 	return (
@@ -46,7 +50,7 @@ const ProductTable = () => {
 			<div className="mb-4 px-4 text-sm font-medium text-black/50">{products && products.length} products</div>
 			<div className="overflow-x-auto">
 				<table className="min-w-full text-sm">
-					<thead className="border-y border-gray-200">
+					<thead className="border-b border-gray-200">
 						<tr>
 							<th className="py-3 px-4 font-medium text-left text-gray-900 whitespace-nowrap">
 								<div className="flex items-center">Image</div>
@@ -104,10 +108,10 @@ const ProductTable = () => {
 										<td className="p-4 text-gray-700 whitespace-nowrap">{dayjs(product.updatedAt).format('DD/MM/YYYY')}</td>
 
 										<td className="mt-10 flex items-center justify-center text-gray-700 whitespace-nowrap space-x-2">
-											<strong className="bg-amber-300 text-black px-3 py-2 rounded text-xs font-medium cursor-pointer select-none">
+											<strong onClick={() => handleEditProduct(product._id, product)} className="bg-amber-300 text-black px-3 py-2 rounded text-xs font-medium cursor-pointer select-none">
 												<BsPencil />
 											</strong>
-											<strong onClick={() => handleDelete(product._id)} className="bg-red-500 text-white px-3 py-2 rounded text-xs font-medium cursor-pointer select-none">
+											<strong onClick={() => handleDeleteProduct(product._id)} className="bg-red-500 text-white px-3 py-2 rounded text-xs font-medium cursor-pointer select-none">
 												<BsTrash />
 											</strong>
 										</td>

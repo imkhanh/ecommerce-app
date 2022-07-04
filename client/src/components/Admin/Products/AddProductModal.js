@@ -20,7 +20,7 @@ const AddProductModal = () => {
 	}, []);
 
 	const alert = (color, msg) => {
-		return <div className={`px-8 h-10 flex items-center text-sm border-l-2 border-${color}-700 bg-${color}-100 text-${color}-700`}>{msg}</div>;
+		return <div className={`px-4 h-10 flex items-center text-sm border-l-2 border-${color}-700 bg-${color}-100 text-${color}-700`}>{msg}</div>;
 	};
 
 	if (form.success || form.error) {
@@ -37,7 +37,7 @@ const AddProductModal = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		if (form.images !== 2) {
+		if (form.images < 1) {
 			setForm({ ...form, title: '', description: '', category: '', status: 'New', quantity: '', discount: '', price: '', images: null, success: false, error: 'Must need to provide 2 images' });
 		}
 

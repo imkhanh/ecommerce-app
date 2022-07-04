@@ -70,10 +70,10 @@ const productController = {
 			const { title, category, images, description, price, quantity, discount, status } = req.body;
 
 			if (!(title && category && description && price && quantity)) {
-				deleteImages(images, 'file');
+				deleteImages(editImages, 'file');
 				return res.json({ error: 'Please fill all the fields' });
-			} else if (images.length === 1) {
-				deleteImages(images, 'file');
+			} else if (editImages && editImages.length < 1) {
+				deleteImages(editImages, 'file');
 				return res.json({ error: 'Must to provide 2 images' });
 			} else {
 				let data = { title, category, images, description, price, quantity, discount, status };

@@ -1,22 +1,26 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 //
 import { LayoutContext } from './components/Shop/Layout/Layout';
 import { layoutState, layoutReducer } from './components/Shop/Layout/LayoutContext';
-//Shop
-import Home from './components/Shop/Home/Home';
-import Products from './components/Shop/Products/Products';
-import SingleProduct from './components/Shop/SingleProduct/SingleProduct';
-import UserProfile from './components/Shop/Dashboard/UserProfile';
-import UserWishList from './components/Shop/Dashboard/UserWishList';
-import UserChangePassword from './components/Shop/Dashboard/UserChangePassword';
+
 import RequireAuth from './components/Shop/Auth/RequireAuth';
 import RequireAdmin from './components/Shop/Auth/RequireAdmin';
+import Loading from './components/Shop/Layout/Loading';
+
+//Shop
+const Home = lazy(() => import('./components/Shop/Home/Home'));
+const Products = lazy(() => import('./components/Shop/Products/Products'));
+const SingleProduct = lazy(() => import('./components/Shop/SingleProduct/SingleProduct'));
+const UserProfile = lazy(() => import('./components/Shop/Dashboard/UserProfile'));
+const UserWishList = lazy(() => import('./components/Shop/Dashboard/UserWishList'));
+const UserChangePassword = lazy(() => import('./components/Shop/Dashboard/UserChangePassword'));
+
 //Admin
-import AdminDashboard from './components/Admin/Dashboard/AdminDashboard';
-import AdminProducts from './components/Admin/Products/AdminProducts';
-import AdminCategories from './components/Admin/Categories/AdminCategories';
-import AdminUsers from './components/Admin/Users/AdminUsers';
+const AdminDashboard = lazy(() => import('./components/Admin/Dashboard/AdminDashboard'));
+const AdminProducts = lazy(() => import('./components/Admin/Products/AdminProducts'));
+const AdminCategories = lazy(() => import('./components/Admin/Categories/AdminCategories'));
+const AdminUsers = lazy(() => import('./components/Admin/Users/AdminUsers'));
 
 const App = () => {
 	const [state, dispatch] = useReducer(layoutReducer, layoutState);
@@ -24,23 +28,25 @@ const App = () => {
 	return (
 		<LayoutContext.Provider value={{ state, dispatch }}>
 			<BrowserRouter>
-				<Routes>
-					<Route path="/" element={<Home />} />
-					<Route path="/products" element={<Products />} />
-					<Route path="/product/detail/:id" element={<SingleProduct />} />
+				<Suspense fallback={<Loading />}>
+					<Routes>
+						<Route path="/" element={<Home />} />
+						<Route path="/products" element={<Products />} />
+						<Route path="/product/detail/:id" element={<SingleProduct />} />
 
-					<Route element={<RequireAuth />}>
-						<Route path="/user/profile" element={<UserProfile />} />
-						<Route path="/user/wish-list" element={<UserWishList />} />
-						<Route path="/user/change-password" element={<UserChangePassword />} />
-					</Route>
-					<Route element={<RequireAdmin />}>
-						<Route path="/admin/dashboard" element={<AdminDashboard />} />
-						<Route path="/admin/products" element={<AdminProducts />} />
-						<Route path="/admin/categories" element={<AdminCategories />} />
-						<Route path="/admin/users" element={<AdminUsers />} />
-					</Route>
-				</Routes>
+						<Route element={<RequireAuth />}>
+							<Route path="/user/profile" element={<UserProfile />} />
+							<Route path="/user/wish-list" element={<UserWishList />} />
+							<Route path="/user/change-password" element={<UserChangePassword />} />
+						</Route>
+						<Route element={<RequireAdmin />}>
+							<Route path="/admin/dashboard" element={<AdminDashboard />} />
+							<Route path="/admin/products" element={<AdminProducts />} />
+							<Route path="/admin/categories" element={<AdminCategories />} />
+							<Route path="/admin/users" element={<AdminUsers />} />
+						</Route>
+					</Routes>
+				</Suspense>
 			</BrowserRouter>
 		</LayoutContext.Provider>
 	);

@@ -120,7 +120,7 @@ const ProductTable = () => {
 							})
 						) : (
 							<tr>
-								<td className="p-4 text-black/30 font-light italic">No product in wish list</td>
+								<td className="p-4 text-black/30 font-light italic">No product found</td>
 							</tr>
 						)}
 					</tbody>

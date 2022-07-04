@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { BsBox, BsCollection, BsGrid, BsPeople, BsReceipt } from 'react-icons/bs';
+import { BsBox, BsCollection, BsGrid, BsPeople, BsPower, BsReceipt } from 'react-icons/bs';
 
 const AdminSidebar = () => {
 	const location = useLocation();
 
 	const links = [
 		{ to: '/admin/dashboard', icon: <BsGrid />, label: 'Dashboard' },
-		{ to: '/admin/categories', icon: <BsBox />, label: 'Categories' },
 		{ to: '/admin/products', icon: <BsCollection />, label: 'Products' },
+		{ to: '/admin/categories', icon: <BsBox />, label: 'Categories' },
 		{ to: '/admin/users', icon: <BsPeople />, label: 'Users' },
 		{ to: '/admin/orders', icon: <BsReceipt />, label: 'Orders' },
 	];
@@ -37,7 +37,8 @@ const AdminSidebar = () => {
 					</li>
 				</ul>
 				<div className="py-4 px-8 border-t border-gray-200">
-					<div onClick={handleLogout} className="cursor-pointer">
+					<div onClick={handleLogout} className="flex items-center cursor-pointer">
+						<BsPower />
 						<span className="ml-4 text-sm font-medium text-black">Logout</span>
 					</div>
 				</div>

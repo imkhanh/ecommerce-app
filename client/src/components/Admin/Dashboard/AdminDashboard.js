@@ -1,11 +1,18 @@
 import React, { createContext, useReducer } from 'react';
-import AdminLayout from '../Layout/AdminLayout';
 import { adminDashboardReducer, adminDashboardState } from './AdminDashboardContext';
+import AdminLayout from '../Layout/AdminLayout';
+import DashboardCard from './DashboardCard';
+import UploadContainer from './UploadContainer';
 
 export const AdminDashboardContext = createContext();
 
 const AdminDashboardComponent = () => {
-	return <div className="h-[2000px]">AdminDashboardComponent</div>;
+	return (
+		<section className="p-8">
+			<DashboardCard />
+			<UploadContainer />
+		</section>
+	);
 };
 
 const AdminDashboard = () => {

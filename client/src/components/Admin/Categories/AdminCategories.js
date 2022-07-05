@@ -9,9 +9,6 @@ export const AdminCategoryContext = createContext();
 const AdminCategoryComponent = () => {
 	return (
 		<section className="p-8">
-			<div className="mb-4">
-				<h4 className="text-black font-bold">Dashboard Category</h4>
-			</div>
 			<CategoryHeader />
 			<CategoryTable />
 		</section>

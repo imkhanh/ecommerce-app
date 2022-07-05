@@ -7,7 +7,6 @@ export const adminCategoryState = {
 		title: '',
 		description: '',
 		status: '',
-		image: '',
 	},
 	loading: false,
 };
@@ -27,7 +26,6 @@ export const adminCategoryReducer = (state = adminCategoryState, action) => {
 					title: action.payload.title,
 					description: action.payload.description,
 					status: action.payload.status,
-					image: action.payload.image,
 				},
 			};
 		case 'editCategoryModalClose':
@@ -39,7 +37,6 @@ export const adminCategoryReducer = (state = adminCategoryState, action) => {
 					title: '',
 					description: '',
 					status: '',
-					image: '',
 				},
 			};
 		case 'loading':

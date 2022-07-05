@@ -95,7 +95,7 @@ const ProductTable = () => {
 										<td className="p-4 ">
 											<img src={`http://localhost:3000/uploads/products/${product.images[0]}`} alt={product.name} className="w-16 h-20 border border-black/10 object-contain" />
 										</td>
-										<td className="p-4 text-gray-700 whitespace-nowrap">{product.title}</td>
+										<td className="p-4 text-gray-700 whitespace-nowrap">{product.title.length < 10 ? product.title : product.title.slice(0, 10) + '...'}</td>
 										<td className="p-4 text-gray-700 whitespace-nowrap">{product.category.title}</td>
 										<td className="p-4 text-gray-700 whitespace-nowrap">{product.description.length < 20 ? product.description : product.description.slice(0, 20) + '...'}</td>
 										<td className="p-4 text-gray-700 whitespace-nowrap">{product.price}$</td>

@@ -79,7 +79,7 @@ const SingleProductSection = () => {
 
 			<div className="flex md:flex-col">
 				<div className="w-2/3 lg:w-3/5 md:w-full">
-					<div className={`md:hidden grid ${product.images.length !== 2 ? 'grid-cols-2 md:grid-cols-1' : 'grid-cols-1'} gap-3`}>
+					<div className={`md:hidden grid ${product.images.length > 3 ? 'grid-cols-2 md:grid-cols-1' : 'grid-cols-1'} gap-3`}>
 						{product &&
 							product.images.length > 0 &&
 							product.images.map((img, index) => {

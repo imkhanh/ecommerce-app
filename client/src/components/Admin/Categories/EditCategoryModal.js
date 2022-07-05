@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { AdminCategoryContext } from './AdminCategories';
-import { patchEditCategory } from './FetchData';
+import { patchEditCategory, getAllCategories } from './FetchData';
 
 const EditCategoryModal = () => {
 	const { state, dispatch } = useContext(AdminCategoryContext);
-	const [form, setForm] = useState({ id: '', title: '', description: '', status: 'New', image: null, editImage: null, success: '', error: '' });
+	const [form, setForm] = useState({ id: '', title: '', description: '', status: 'New', success: '', error: '' });
 
 	useEffect(() => {
 		setForm({
@@ -13,11 +13,23 @@ const EditCategoryModal = () => {
 			title: state.editCategoryModal.title,
 			description: state.editCategoryModal.description,
 			status: state.editCategoryModal.status,
-			image: state.editCategoryModal.image,
 		});
 
 		// eslint-disable-next-line
 	}, [state.editCategoryModal]);
+
+	const fetchData = async () => {
+		dispatch({ type: 'loading', payload: true });
+		try {
+			const res = await getAllCategories();
+			if (res && res.categories) {
+				dispatch({ type: 'categories', payload: res.categories });
+				dispatch({ type: 'loading', payload: false });
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	const alert = (color, msg) => {
 		return <div className={`px-4 h-10 flex items-center text-sm border-l-2 border-${color}-700 bg-${color}-100 text-${color}-700`}>{msg}</div>;
@@ -25,7 +37,7 @@ const EditCategoryModal = () => {
 
 	if (form.success || form.error) {
 		setTimeout(() => {
-			setForm({ ...form, title: '', description: '', category: '', status: 'New', quantity: '', discount: '', price: '', images: null, success: false, error: false });
+			setForm({ ...form, title: '', description: '', status: 'New', success: false, error: false });
 		}, 2000);
 	}
 
@@ -37,14 +49,15 @@ const EditCategoryModal = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		if (form.editImage === null) {
-			setForm({ ...form, title: '', description: '', status: 'New', image: null, success: false, error: 'Must need to provide 1 image' });
-		}
-
 		try {
 			const res = await patchEditCategory(form);
 			if (res && res.success) {
-				setForm({ ...form, title: '', description: '', status: 'New', image: null, success: false, error: res.error });
+				setForm({ ...form, title: '', description: '', status: 'New', success: res.success, error: false });
+
+				setTimeout(() => {
+					fetchData();
+					dispatch({ type: 'editCategoryModalClose' });
+				}, 2000);
 			} else {
 				setForm({ ...form, success: false, error: res.error });
 			}
@@ -77,15 +90,7 @@ const EditCategoryModal = () => {
 						<label className="block mb-1 text-sm">Status</label>
 						<input type="text" name="status" value={form.status} onChange={handleChange} className="px-4 text-sm w-full h-10 outline-none border border-gray-200 focus:border-black rounded-[3px]" />
 					</div>
-					<div>
-						<label className="block mb-1 text-sm">Image</label>
-						{form.image && (
-							<figure className="mb-2">
-								<img src={`http://localhost:3000/uploads/categories/${form.image}`} alt={form.title} className="w-14 h-14 object-contain border border-black/10 rounded-[3px]" />
-							</figure>
-						)}
-						<input type="file" multiple onChange={(e) => setForm({ ...form, editImage: e.target.files[0] })} className="px-4 text-sm w-full h-10 outline-none border border-gray-200 focus:border-black rounded-[3px]" />
-					</div>
+
 					<button type="submit" className="w-full h-10 bg-black text-white text-sm font-medium rounded-[3px]">
 						Edit
 					</button>

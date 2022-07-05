@@ -50,9 +50,6 @@ const CategoryTable = () => {
 					<thead className="border-b border-gray-200">
 						<tr>
 							<th className="py-3 px-4 font-medium text-left text-gray-900 whitespace-nowrap">
-								<div className="flex items-center">Image</div>
-							</th>
-							<th className="py-3 px-4 font-medium text-left text-gray-900 whitespace-nowrap">
 								<div className="flex items-center">Title</div>
 							</th>
 							<th className="py-3 px-4 font-medium text-left text-gray-900 whitespace-nowrap">
@@ -77,10 +74,7 @@ const CategoryTable = () => {
 							categories.map((item) => {
 								return (
 									<tr key={item._id}>
-										<td className="p-4 ">
-											<img src={`http://localhost:3000/uploads/categories/${item.image}`} alt={item.name} className="w-16 h-20 border border-black/10 object-contain" />
-										</td>
-										<td className="p-4 text-gray-700 whitespace-nowrap">{item.title}</td>
+										<td className="p-4 w-1/5 text-gray-700 whitespace-nowrap">{item.title}</td>
 										<td className="p-4 text-gray-700 whitespace-nowrap">{item.description}</td>
 										<td className="p-4 text-gray-700 whitespace-nowrap">
 											<strong className="bg-red-100 text-red-700 px-3 py-2 rounded text-xs font-medium cursor-pointer select-none">{item.status}</strong>
@@ -88,7 +82,7 @@ const CategoryTable = () => {
 										<td className="p-4 text-gray-700 whitespace-nowrap">{dayjs(item.createdAt).format('DD/MM/YYYY')}</td>
 										<td className="p-4 text-gray-700 whitespace-nowrap">{dayjs(item.updatedAt).format('DD/MM/YYYY')}</td>
 
-										<td className="px-4 mt-10 flex items-center text-gray-700 whitespace-nowrap space-x-2">
+										<td className="p-4  flex items-center text-gray-700 whitespace-nowrap space-x-2">
 											<strong onClick={() => handleEditCategory(item._id, item)} className="bg-amber-300 text-black px-3 py-2 rounded text-xs font-medium cursor-pointer select-none">
 												<BsPencil />
 											</strong>

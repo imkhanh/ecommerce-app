@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { AdminCategoryContext } from './AdminCategories';
-import { postAddCategory } from './FetchData';
+import { getAllCategories, postAddCategory } from './FetchData';
 
 const AddCategoryModal = () => {
 	const { state, dispatch } = useContext(AdminCategoryContext);
-	const [form, setForm] = useState({ title: '', description: '', status: 'New', image: null, success: '', error: '' });
+	const [form, setForm] = useState({ title: '', description: '', status: 'New', success: '', error: '' });
 
 	const alert = (color, msg) => {
 		return <div className={`px-4 h-10 flex items-center text-sm border-l-2 border-${color}-700 bg-${color}-100 text-${color}-700`}>{msg}</div>;
@@ -12,9 +12,22 @@ const AddCategoryModal = () => {
 
 	if (form.success || form.error) {
 		setTimeout(() => {
-			setForm({ ...form, title: '', description: '', status: 'New', image: null, success: false, error: false });
+			setForm({ ...form, title: '', description: '', status: 'New', success: false, error: false });
 		}, 2000);
 	}
+
+	const fetchData = async () => {
+		dispatch({ type: 'loading', payload: true });
+		try {
+			const res = await getAllCategories();
+			if (res && res.categories) {
+				dispatch({ type: 'categories', payload: res.categories });
+				dispatch({ type: 'loading', payload: false });
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -24,16 +37,17 @@ const AddCategoryModal = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		if (form.image === null) {
-			setForm({ ...form, title: '', description: '', status: 'New', image: null, success: false, error: 'Must need to provide 1 image' });
-		}
-
 		try {
 			const res = await postAddCategory(form);
 			if (res && res.success) {
-				setForm({ ...form, title: '', description: '', status: 'New', image: null, success: res.success, error: false });
+				setForm({ ...form, title: '', description: '', status: 'New', success: res.success, error: false });
+
+				setTimeout(() => {
+					fetchData();
+					dispatch({ type: 'addCategoryModal', payload: false });
+				}, 2000);
 			} else {
-				setForm({ ...form, title: '', description: '', status: 'New', image: null, success: false, error: res.error });
+				setForm({ ...form, title: '', description: '', status: 'New', success: false, error: res.error });
 			}
 		} catch (error) {
 			console.log(error);
@@ -64,10 +78,7 @@ const AddCategoryModal = () => {
 						<label className="block mb-1 text-sm">Status</label>
 						<input type="text" name="status" value={form.status} onChange={handleChange} className="px-4 text-sm w-full h-10 outline-none border border-gray-200 focus:border-black rounded-[3px]" />
 					</div>
-					<div>
-						<label className="block mb-1 text-sm">Image</label>
-						<input type="file" multiple onChange={(e) => setForm({ ...form, image: e.target.files[0] })} className="px-4 text-sm w-full h-10 outline-none border border-gray-200 focus:border-black rounded-[3px]" />
-					</div>
+
 					<button type="submit" className="w-full h-10 bg-black text-white text-sm font-medium rounded-[3px]">
 						Add
 					</button>

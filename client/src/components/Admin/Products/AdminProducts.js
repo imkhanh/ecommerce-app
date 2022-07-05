@@ -9,9 +9,6 @@ export const AdminProductContext = createContext();
 const AdminProductComponent = () => {
 	return (
 		<section className="p-8">
-			<div className="mb-4">
-				<h4 className="text-black font-bold">Dashboard Product</h4>
-			</div>
 			<ProductHeader />
 			<ProductTable />
 		</section>

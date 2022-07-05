@@ -21,26 +21,17 @@ const productController = {
 	},
 	addCategory: async (req, res) => {
 		try {
-			const imageFile = req.file.filename;
 			const { title, description, status } = req.body;
 
-			const filePath = path.resolve(__dirname, `../../client/public/uploads/categories/${imageFile}`);
-
-			if (!(imageFile && title && description && status)) {
-				fs.unlink(filePath, (err) => {
-					if (err) return err;
-				});
-				return res.json({ error: 'Please fill all the fields' });
+			if (!title) {
+				return res.json({ error: 'Please add title' });
 			}
 
 			const checkTitleExists = await Categories.findOne({ title });
 			if (checkTitleExists) {
-				fs.unlink(filePath, (err) => {
-					if (err) return err;
-				});
 				return res.json({ error: 'Title already exists' });
 			}
-			const newCategory = new Categories({ image: imageFile, title, description, status });
+			const newCategory = new Categories({ title, description, status });
 			await newCategory.save();
 
 			return res.json({ success: 'Category added succssfully', category: newCategory });
@@ -50,18 +41,13 @@ const productController = {
 	},
 	editCategory: async (req, res) => {
 		try {
-			const editImageFile = req.file.filename;
-			const { title, description, status, image } = req.body;
-			const filePath = path.resolve(__dirname, `../../client/public/uploads/categories/${editImageFile}`);
+			const { title, description, status } = req.body;
 
-			if (!(image && title && description && status)) {
-				fs.unlink(filePath, (err) => {
-					if (err) return err;
-				});
-				return res.json({ error: 'Please fill all the fields' });
+			if (!title) {
+				return res.json({ error: 'Please add title' });
 			}
 
-			await Categories.findByIdAndUpdate({ _id: req.params.id }, { image: editImageFile, title, description, status }, { new: true });
+			await Categories.findByIdAndUpdate({ _id: req.params.id }, { title, description, status }, { new: true });
 			return res.json({ success: 'Category edited successfully' });
 		} catch (error) {
 			console.log(error);

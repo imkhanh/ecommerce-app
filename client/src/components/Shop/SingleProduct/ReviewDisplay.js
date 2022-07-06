@@ -37,7 +37,7 @@ const ReviewDisplay = () => {
 	};
 
 	return (
-		<div className="divide-y divide-gray-200">
+		<div className="mb-4 divide-y divide-gray-200">
 			{product.ratingReviews && product.ratingReviews.length > 0 ? (
 				product.ratingReviews.map((item) => {
 					return (

@@ -48,14 +48,13 @@ const customizeController = {
 	deleteSlide: async (req, res) => {
 		try {
 			const slide = await Customizes.findById(req.params.id);
-			const filePath = path.resolve(`../../client/public/uploads/customizes/${slide.slideImage}`);
+			const filePath = path.join(`../../client/public/uploads/customizes/${slide.slideImage}`);
 
 			const delSlide = await Customizes.findByIdAndDelete(req.params.id);
 			if (delSlide) {
 				fs.unlink(filePath, (err) => {
 					if (err) console.log(err);
 				});
-
 				return res.json({ success: 'Slide deleted successfully' });
 			}
 		} catch (error) {

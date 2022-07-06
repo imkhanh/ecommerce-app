@@ -10,7 +10,7 @@ const AuthModal = () => {
 	const [form, setForm] = useState({ name: '', email: '', password: '', error: '', success: '' });
 
 	const alert = (color, msg) => {
-		return <div className={`mb-4 px-4 h-10 flex items-center text-sm border-l-2 border-${color}-700 bg-${color}-100 text-${color}-700 rounded-[3px]`}>{msg}</div>;
+		return <div className={`mb-4 px-4 h-10 flex items-center text-sm border-l-2 border-${color}-700 bg-${color}-100 text-${color}-700 `}>{msg}</div>;
 	};
 
 	if (form.success || form.error) {

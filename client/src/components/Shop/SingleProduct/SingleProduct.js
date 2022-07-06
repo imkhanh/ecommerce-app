@@ -66,7 +66,7 @@ const SingleProductSection = () => {
 	}
 
 	return (
-		<section className="pt-12 pb-32 px-8 md:px-4 max-w-[80rem] mx-auto">
+		<section className="pt-12 pb-32 px-8 md:px-4 max-w-[80rem] mx-auto  transition-all duration-200 ease-in-out">
 			<div className="mb-4 flex items-center space-x-2">
 				<Link to="/" className="text-sm font-light text-black/50">
 					Home
@@ -77,8 +77,8 @@ const SingleProductSection = () => {
 				<span className="text-sm text-black cursor-pointer">{product && product.title}</span>
 			</div>
 
-			<div className="flex md:flex-col">
-				<div className="w-2/3 lg:w-3/5 md:w-full">
+			<div className="flex md:flex-col transition-all duration-200 ease-in-out">
+				<div className="w-2/3 lg:w-3/5 md:w-full  transition-all duration-200 ease-in-out">
 					<div className={`md:hidden grid ${product.images.length > 3 ? 'grid-cols-2 md:grid-cols-1' : 'grid-cols-1'} gap-3`}>
 						{product &&
 							product.images.length > 0 &&

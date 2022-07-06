@@ -36,7 +36,7 @@ const ProductList = () => {
 	if (loading) return <Loading />;
 
 	return (
-		<div className="mt-8 grid grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-x-4 gap-y-16 transition-all duration-300 ease-in-out">
+		<div className="mt-8 grid grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-x-4 gap-y-16 transition-all duration-200 ease-in-out">
 			{products && products.length > 0 ? (
 				products.map((product) => {
 					return (
@@ -64,7 +64,7 @@ const ProductList = () => {
 							</figure>
 							<div className="pt-4">
 								<Link to={`/product/detail/${product._id}`} className="text-black font-medium">
-									{product.title}
+									{product.title.length < 35 ? product.title : product.title.slice(0, 35) + '...'}
 								</Link>
 								<div className="text-black/50 font-light">{product.category.title}</div>
 								{product.discount ? (

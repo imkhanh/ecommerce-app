@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { BsGear, BsHandbag, BsHeart, BsPerson, BsPersonCircle, BsReceipt, BsSearch, BsShieldLock } from 'react-icons/bs';
+import { BsGear, BsHandbag, BsHeart, BsPerson, BsPersonCircle, BsPower, BsReceipt, BsSearch, BsShieldLock } from 'react-icons/bs';
 import { Link, useLocation } from 'react-router-dom';
 import { LayoutContext } from './Layout';
 import { isAdmin, isAuth, logout } from '../Auth/Authentication';
@@ -34,7 +34,7 @@ const Header = () => {
 
 	const DropdownMenu = () => {
 		return (
-			<ul className="absolute top-12 -right-12 border border-gray-200 bg-white w-48 h-auto shadow rounded-[3px] z-20">
+			<ul className="absolute top-12 -right-12 border border-gray-200 bg-white w-44 h-auto shadow rounded-[3px] z-20">
 				{isAdmin() ? (
 					<li>
 						<Link to="/admin/dashboard" className="px-4 py-2 flex items-center text-black hover:bg-gray-50 transition-colors">
@@ -71,7 +71,8 @@ const Header = () => {
 					</>
 				)}
 				<li>
-					<div onClick={logout} className="py-2 border-t border-gray-200 flex items-center cursor-pointer text-black hover:bg-gray-50 transition-colors">
+					<div onClick={logout} className="px-4 py-2 border-t border-gray-200 flex items-center cursor-pointer text-black hover:bg-gray-50 transition-colors">
+						<BsPower className="text-sm" />
 						<span className="ml-4 text-sm">Logout</span>
 					</div>
 				</li>
@@ -88,7 +89,7 @@ const Header = () => {
 					</Link>
 				</div>
 				<div className="w-4/6 flex items-center justify-center">
-					<ul className="flex space-x-10 lg:space-x-6">
+					<ul className="flex space-x-10 lg:space-x-6 md:hidden">
 						{menuLinks.map((link) => {
 							return (
 								<li key={link.index}>

@@ -109,7 +109,7 @@ const UserWishListComponent = () => {
 							})
 						) : (
 							<tr>
-								<td>No product in wish list</td>
+								<td className="p-4 text-black/50 italic font-light">No product in wish list</td>
 							</tr>
 						)}
 					</tbody>

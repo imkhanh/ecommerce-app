@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const getAllProducts = async () => {
 	try {
-		const res = await axios.get('/api/product/get-all');
+		const res = await axios.get('/api/product/get-all-by-admin');
 		return res.data;
 	} catch (error) {
 		console.log(error);

@@ -28,6 +28,8 @@ app.use('/api/product', require('./routes/products'));
 app.use('/api/category', require('./routes/categories'));
 app.use('/api/user', require('./routes/users'));
 app.use('/api/customize', require('./routes/customizes'));
+app.use('/api/braintree', require('./routes/braintree'));
+app.use('/api/order', require('./routes/orders'));
 
 //run server
 const PORT = 8000 || process.env.PORT;

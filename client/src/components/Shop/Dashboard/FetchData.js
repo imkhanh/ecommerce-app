@@ -9,6 +9,16 @@ export const getSingleUser = async (id) => {
 	}
 };
 
+export const getSingleOrder = async () => {
+	const userId = JSON.parse(localStorage.getItem('jwt')).user._id;
+	try {
+		const res = await axios.post('/api/order/get-single-order', { userId });
+		return res.data;
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 export const postAddWishList = async () => {
 	const wishProduct = localStorage.getItem('wish') ? JSON.parse(localStorage.getItem('wish')) : [];
 

@@ -66,8 +66,8 @@ const SingleProductSection = () => {
 	}
 
 	return (
-		<section className="pt-12 pb-32 px-8 md:px-4 max-w-[80rem] mx-auto  transition-all duration-200 ease-in-out">
-			<div className="mb-4 flex items-center space-x-2">
+		<section className="py-12 px-8 md:px-4  max-w-[80rem] mx-auto  transition-all duration-200 ease-in-out">
+			<div className="mb-8 md:mb-4 flex items-center space-x-2">
 				<Link to="/" className="text-sm font-light text-black/50">
 					Home
 				</Link>
@@ -121,11 +121,11 @@ const SingleProductSection = () => {
 								{product.discount ? (
 									<div className="mt-4 flex items-center text-black font-light space-x-4">
 										<span className="text-black font-medium">{product.price_discount}$</span>
-										<span className="text-black/30 line-through">{product.price}$</span>
+										<span className="text-black/30 line-through">$ {product.price}</span>
 										<p className="font-medium text-green-700">{product.discount}% off</p>
 									</div>
 								) : (
-									<div className="mt-4 text-black font-medium">{product.price}$</div>
+									<div className="mt-4 text-black font-medium">$ {product.price}</div>
 								)}
 							</div>
 							<span className="text-lg text-black/70 cursor-pointer select-none">

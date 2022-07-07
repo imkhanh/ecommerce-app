@@ -16,6 +16,7 @@ const DashboardLayout = ({ children }) => {
 		const fetchData = async () => {
 			try {
 				const res = await getSingleUser(userId);
+
 				if (res && res.user) {
 					dispatch({ type: 'singleUser', payload: res.user });
 				}
@@ -32,7 +33,7 @@ const DashboardLayout = ({ children }) => {
 		<DashboardContext.Provider value={{ state, dispatch }}>
 			<Header />
 			<CartProduct />
-			<div className="max-w-[80rem] mx-auto py-12 px-8 md:px-4" style={{ minHeight: 'calc(100vh)' }}>
+			<div className="py-12 px-8 md:px-4" style={{ minHeight: 'calc(100vh)' }}>
 				<div className="flex md:flex-col space-x-6 md:space-x-0 md:space-y-12">
 					<Sidebar />
 					<div className="w-4/5 lg:w-[70%] md:w-full border-t-2 border-green-700 shadow-lg rounded-bl-md rounded-br-md">{children}</div>

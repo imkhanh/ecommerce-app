@@ -4,6 +4,7 @@ import Layout from '../Layout/Layout';
 import Featured from './Featured';
 import Slides from './Slides';
 import Slogan from './Slogan';
+import OrderSuccess from './OrderSuccess';
 
 export const HomeContext = createContext();
 

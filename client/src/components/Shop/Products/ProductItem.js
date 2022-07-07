@@ -40,13 +40,13 @@ const ProductItem = ({ product }) => {
 				{product.discount ? (
 					<div className="pt-3 flex flex-col">
 						<p className="text-black font-light space-x-3">
-							<span className="text-black font-medium">{product.price_discount}$</span>
-							<span className="text-black/30 line-through">{product.price}$</span>
+							<span className="text-black font-medium">$ {product.price_discount}</span>
+							<span className="text-black/30 line-through">$ {product.price}</span>
 						</p>
 						<p className="mt-1 font-medium text-green-700">{product.discount}% off</p>
 					</div>
 				) : (
-					<div className="pt-3 text-black font-medium">{product.price}$</div>
+					<div className="pt-3 text-black font-medium">$ {product.price}</div>
 				)}
 			</div>
 		</div>

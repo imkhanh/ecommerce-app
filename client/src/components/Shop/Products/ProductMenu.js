@@ -26,7 +26,7 @@ const ProductMenu = ({ category, setCategory, search, setSearch, sort, setSort }
 	};
 
 	return (
-		<div className="h-16 sticky top-14 bg-white border-b border-black/10 grid grid-cols-2 z-10">
+		<div className="mb-8 h-16 sticky top-14 bg-white border-b border-black/10 grid grid-cols-2 z-10">
 			<div className="md:hidden col-span-1  flex items-center space-x-2">
 				<Link to="/" className="text-sm font-light text-black/50">
 					Home

@@ -75,7 +75,7 @@ const CartProduct = () => {
 											<div className="ml-4 text-sm space-y-1 text-[#888] font-light">
 												<h4 className="text-black font-medium">{product.title}</h4>
 												<p>{product.category.title}</p>
-												<p>{product.price_discount !== null ? product.price_discount : product.price}$</p>
+												<p>$ {product.price_discount !== null ? product.price_discount : product.price}</p>
 												<p>x{totalQuantity(product._id)}</p>
 											</div>
 										</div>
@@ -107,10 +107,10 @@ const CartProduct = () => {
 						<div className="h-36 border-t border-gray-300 space-y-2">
 							<div className="mt-2 px-4 flex items-center justify-between">
 								<span className="text-black/50">Total price</span>
-								<span className="text-lg text-black font-semibold">{totalPrice()}$</span>
+								<span className="text-lg text-black font-semibold">$ {totalPrice()}</span>
 							</div>
 							<div className="px-4 space-y-1">
-								<Link to="/" className="w-full h-11 flex items-center justify-center bg-black text-white rounded-[3px]">
+								<Link to="/checkout" onClick={() => dispatch({ type: 'cartModal', payload: false })} className="w-full h-11 flex items-center justify-center bg-black text-white rounded-[3px]">
 									<BsCashCoin />
 									<span className="ml-2 text-sm">Checkout</span>
 								</Link>

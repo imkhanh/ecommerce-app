@@ -3,6 +3,7 @@ import { HomeContext } from './Home';
 import { getAllSlides } from './FetchData';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import { changeSlide } from '../SingleProduct/Minxins';
+import OrderSuccess from './OrderSuccess';
 
 const Slides = () => {
 	const { state, dispatch } = useContext(HomeContext);
@@ -23,7 +24,7 @@ const Slides = () => {
 	}, []);
 
 	return (
-		<div className="relative h-[740px] lg:h-[640px] md:h-[540px] sm:h-[440px] bg-gray-200 transition-all duration-200 ease-in-out">
+		<div className="relative h-[740px] lg:h-[440px] md:h-[340px] sm:h-[240px] bg-gray-100 transition-all duration-200 ease-in-out">
 			{state.slides.length > 0 ? <img src={`http://localhost:3000/uploads/customizes/${state.slides[currentImage].slideImage}`} className="w-full h-full object-cover" alt="slideIamge" /> : ''}
 
 			{state.slides.length > 0 ? (
@@ -42,6 +43,7 @@ const Slides = () => {
 					</span>
 				</>
 			) : null}
+			<OrderSuccess />
 		</div>
 	);
 };

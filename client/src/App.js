@@ -6,15 +6,16 @@ import { layoutState, layoutReducer } from './components/Shop/Layout/LayoutConte
 
 import RequireAuth from './components/Shop/Auth/RequireAuth';
 import RequireAdmin from './components/Shop/Auth/RequireAdmin';
-import Loading from './components/Shop/Layout/Loading';
 
 //Shop
 const Home = lazy(() => import('./components/Shop/Home/Home'));
 const Products = lazy(() => import('./components/Shop/Products/Products'));
 const SingleProduct = lazy(() => import('./components/Shop/SingleProduct/SingleProduct'));
+const Checkout = lazy(() => import('./components/Shop/Orders/Checkout'));
 const UserProfile = lazy(() => import('./components/Shop/Dashboard/UserProfile'));
 const UserWishList = lazy(() => import('./components/Shop/Dashboard/UserWishList'));
 const UserChangePassword = lazy(() => import('./components/Shop/Dashboard/UserChangePassword'));
+const UserOrder = lazy(() => import('./components/Shop/Dashboard/UserOrder'));
 
 //Admin
 const AdminDashboard = lazy(() => import('./components/Admin/Dashboard/AdminDashboard'));
@@ -28,7 +29,7 @@ const App = () => {
 	return (
 		<LayoutContext.Provider value={{ state, dispatch }}>
 			<BrowserRouter>
-				<Suspense fallback={<Loading />}>
+				<Suspense fallback={<div>Loading.....</div>}>
 					<Routes>
 						<Route path="/" element={<Home />} />
 						<Route path="/products" element={<Products />} />
@@ -38,6 +39,8 @@ const App = () => {
 							<Route path="/user/profile" element={<UserProfile />} />
 							<Route path="/user/wish-list" element={<UserWishList />} />
 							<Route path="/user/change-password" element={<UserChangePassword />} />
+							<Route path="/user/orders" element={<UserOrder />} />
+							<Route path="/checkout" element={<Checkout />} />
 						</Route>
 						<Route element={<RequireAdmin />}>
 							<Route path="/admin/dashboard" element={<AdminDashboard />} />

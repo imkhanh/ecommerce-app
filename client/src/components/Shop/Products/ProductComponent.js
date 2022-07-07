@@ -37,10 +37,10 @@ const ProductComponent = () => {
 	if (loading) return <Loading />;
 
 	return (
-		<section className="py-12 px-8 md:px-4 max-w-[80rem] mx-auto">
+		<section className="py-12 px-8 md:px-4">
 			<ProductMenu category={category} setCategory={setCategory} sort={sort} setSort={setSort} search={search} setSearch={setSearch} />
 
-			<div className="mt-8 grid grid-cols-3 lg:grid-cols-3 md:grid-cols-2 gap-x-4 gap-y-16 transition-all duration-200 ease-in-out">
+			<div className="grid grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-x-4 gap-y-16 transition-all duration-200 ease-in-out">
 				{products && products.length > 0 ? (
 					products.map((product) => {
 						return <ProductItem key={product._id} product={product} />;

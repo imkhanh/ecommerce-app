@@ -56,22 +56,22 @@ const UserWishListComponent = () => {
 				<table className="min-w-full text-sm border border-gray-200">
 					<thead className="border-b border-gray-200">
 						<tr>
-							<th className="py-2 px-4 font-medium text-left text-gray-900 whitespace-nowrap">
+							<th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap">
 								<div className="flex items-center">Image</div>
 							</th>
-							<th className="py-2 px-4 font-medium text-left text-gray-900 whitespace-nowrap">
+							<th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap">
 								<div className="flex items-center">Title</div>
 							</th>
-							<th className="py-2 px-4 font-medium text-left text-gray-900 whitespace-nowrap">
+							<th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap">
 								<div className="flex items-center">Category</div>
 							</th>
-							<th className="py-2 px-4 font-medium text-left text-gray-900 whitespace-nowrap">
+							<th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap">
 								<div className="flex items-center">Price ($)</div>
 							</th>
-							<th className="py-2 px-4 font-medium text-left text-gray-900 whitespace-nowrap">
+							<th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap">
 								<div className="flex items-center">Status</div>
 							</th>
-							<th className="py-2 px-4 font-medium text-left text-gray-900 whitespace-nowrap">
+							<th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap">
 								<div className="flex items-center">Actions</div>
 							</th>
 						</tr>
@@ -81,10 +81,10 @@ const UserWishListComponent = () => {
 							products.map((product) => {
 								return (
 									<tr key={product._id}>
-										<td className="p-4 ">
-											<img src={`http://localhost:3000/uploads/products/${product.images[0]}`} alt={product.name} className="w-16 h-20 border border-black/10 object-contain" />
+										<td className="p-4">
+											<img src={`http://localhost:3000/uploads/products/${product.images[0]}`} alt={product.name} className="w-20 h-24 border border-black/10 object-cover" />
 										</td>
-										<td className="p-4 text-gray-700 whitespace-nowrap">{product.title}</td>
+										<td className="p-4 text-gray-700 whitespace-nowrap">{product.title.length < 20 ? product.title : product.title.slice(0, 20) + '...'}</td>
 										<td className="p-4 text-gray-700 whitespace-nowrap">{product.category.title}</td>
 										<td className="p-4 text-gray-700 whitespace-nowrap">{product.price}$</td>
 										<td className="p-4 text-gray-700 whitespace-nowrap">

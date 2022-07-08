@@ -3,6 +3,7 @@ import { adminDashboardReducer, adminDashboardState } from './AdminDashboardCont
 import AdminLayout from '../Layout/AdminLayout';
 import DashboardCard from './DashboardCard';
 import UploadContainer from './UploadContainer';
+import TodayAllOrders from './TodayAllOrders';
 
 export const AdminDashboardContext = createContext();
 
@@ -11,6 +12,7 @@ const AdminDashboardComponent = () => {
 		<section className="p-8">
 			<DashboardCard />
 			<UploadContainer />
+			<TodayAllOrders />
 		</section>
 	);
 };

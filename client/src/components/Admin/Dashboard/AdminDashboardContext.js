@@ -1,6 +1,7 @@
 export const adminDashboardState = {
 	slides: [],
 	totalData: [],
+	totalOrders: [],
 	loading: false,
 };
 
@@ -10,6 +11,8 @@ export const adminDashboardReducer = (state = adminDashboardState, action) => {
 			return { ...state, loading: action.payload };
 		case 'totalData':
 			return { ...state, totalData: action.payload };
+		case 'totalOrders':
+			return { ...state, totalOrders: action.payload };
 		case 'slides':
 			return { ...state, slides: action.payload };
 		default:

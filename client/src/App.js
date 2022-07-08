@@ -22,6 +22,7 @@ const AdminDashboard = lazy(() => import('./components/Admin/Dashboard/AdminDash
 const AdminProducts = lazy(() => import('./components/Admin/Products/AdminProducts'));
 const AdminCategories = lazy(() => import('./components/Admin/Categories/AdminCategories'));
 const AdminUsers = lazy(() => import('./components/Admin/Users/AdminUsers'));
+const AdminOrders = lazy(() => import('./components/Admin/Orders/AdminOrders'));
 
 const App = () => {
 	const [state, dispatch] = useReducer(layoutReducer, layoutState);
@@ -44,9 +45,10 @@ const App = () => {
 						</Route>
 						<Route element={<RequireAdmin />}>
 							<Route path="/admin/dashboard" element={<AdminDashboard />} />
-							<Route path="/admin/products" element={<AdminProducts />} />
-							<Route path="/admin/categories" element={<AdminCategories />} />
-							<Route path="/admin/users" element={<AdminUsers />} />
+							<Route path="/admin/dashboard/products" element={<AdminProducts />} />
+							<Route path="/admin/dashboard/categories" element={<AdminCategories />} />
+							<Route path="/admin/dashboard/users" element={<AdminUsers />} />
+							<Route path="/admin/dashboard/orders" element={<AdminOrders />} />
 						</Route>
 					</Routes>
 				</Suspense>

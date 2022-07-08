@@ -61,7 +61,7 @@ const UserTable = () => {
 							</th>
 							<th className="py-3 px-4 font-medium text-left text-gray-900 whitespace-nowrap">
 								<div className="flex items-center">Gender</div>
-							</th>{' '}
+							</th>
 							<th className="py-3 px-4 font-medium text-left text-gray-900 whitespace-nowrap">
 								<div className="flex items-center">Permission</div>
 							</th>
@@ -86,13 +86,13 @@ const UserTable = () => {
 										<td className="p-4 text-gray-700 whitespace-nowrap">{item.phone}</td>
 										<td className="p-4 text-gray-700 whitespace-nowrap">{item.address}</td>
 										<td className="p-4 text-gray-700 whitespace-nowrap">{item.gender}</td>
-										<td className="p-4 text-gray-700 whitespace-nowrap">
+										<td className="p-4 text-gray-700">
 											<strong className={`${item.role === 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'} px-3 py-2 rounded text-xs font-medium cursor-pointer select-none`}>{item.role === 0 ? 'Customer' : 'Admin'}</strong>
 										</td>
 										<td className="p-4 text-gray-700 whitespace-nowrap">{dayjs(item.createdAt).format('DD/MM/YYYY')}</td>
 										<td className="p-4 text-gray-700 whitespace-nowrap">{dayjs(item.updatedAt).format('DD/MM/YYYY')}</td>
 
-										<td className="p-4 flex items-center text-gray-700 whitespace-nowrap space-x-2">
+										<td className="p-4 flex items-center text-gray-700 space-x-2">
 											<strong onClick={() => handleDeleteUser(item._id)} className="bg-red-500 text-white px-3 py-2 rounded text-xs font-medium cursor-pointer select-none">
 												<BsTrash />
 											</strong>

@@ -50,7 +50,7 @@ const UploadContainer = () => {
 	return (
 		<div className="mt-12">
 			<div className="mb-4">
-				<h4 className="text-black font-bold">Upload slide</h4>
+				<h4 className="text-black font-bold">Upload Slide</h4>
 			</div>
 
 			<div className="relative w-full p-8 border-t-4 border-black bg-white rounded-bl-md rounded-br-md shadow-lg overflow-x-auto space-y-8">

@@ -2,6 +2,7 @@ const Customizes = require('../models/customizes');
 const Products = require('../models/products');
 const Users = require('../models/users');
 const Categories = require('../models/categories');
+const Orders = require('../models/orders');
 const fs = require('fs');
 const path = require('path');
 
@@ -11,9 +12,10 @@ const customizeController = {
 			const products = await Products.countDocuments();
 			const users = await Users.countDocuments();
 			const categories = await Categories.countDocuments();
+			const orders = await Orders.countDocuments();
 
-			if (products && users && categories) {
-				return res.json({ products, users, categories });
+			if (products && users && categories && orders) {
+				return res.json({ products, users, categories, orders });
 			}
 		} catch (error) {
 			console.log(error);

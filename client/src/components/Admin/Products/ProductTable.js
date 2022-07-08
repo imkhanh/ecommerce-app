@@ -107,7 +107,7 @@ const ProductTable = () => {
 										<td className="p-4 text-gray-700 whitespace-nowrap">{dayjs(product.createdAt).format('DD/MM/YYYY')}</td>
 										<td className="p-4 text-gray-700 whitespace-nowrap">{dayjs(product.updatedAt).format('DD/MM/YYYY')}</td>
 
-										<td className="mt-10 flex items-center justify-center text-gray-700 whitespace-nowrap space-x-2">
+										<td className="pl-4 mt-10 flex items-center justify-center text-gray-700 whitespace-nowrap space-x-2">
 											<strong onClick={() => handleEditProduct(product._id, product)} className="bg-amber-300 text-black px-3 py-2 rounded text-xs font-medium cursor-pointer select-none">
 												<BsPencil />
 											</strong>

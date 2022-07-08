@@ -9,6 +9,15 @@ export const getAllData = async () => {
 	}
 };
 
+export const getAllOrders = async () => {
+	try {
+		const res = await axios.get('/api/order/get-all-orders');
+		return res.data;
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 export const getAllSlides = async () => {
 	try {
 		const res = await axios.get('/api/customize/get-all-slides');

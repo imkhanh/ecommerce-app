@@ -8,9 +8,6 @@ export const AdminUserContext = createContext();
 const AdminUserComponent = () => {
 	return (
 		<section className="p-8">
-			<div className="mb-4">
-				<h4 className="text-black font-bold">Dashboard Category</h4>
-			</div>
 			<UserTable />
 		</section>
 	);

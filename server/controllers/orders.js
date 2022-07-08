@@ -40,11 +40,9 @@ const orderController = {
 	},
 	editOrder: async (req, res) => {
 		try {
-			const { userId, status } = req.body;
-			if (!userId) {
-				return res.json({ success: 'User not exists' });
-			}
-			const currentOrder = await Orders.findByIdAndUpdate(userId, { status: status, updatedAt: Date.now() });
+			const { status } = req.body;
+
+			const currentOrder = await Orders.findByIdAndUpdate({ _id: req.params.id }, { status: status, updatedAt: Date.now() }, { new: true });
 
 			if (currentOrder) {
 				return res.json({ success: 'Order edited successfully' });
@@ -55,12 +53,9 @@ const orderController = {
 	},
 	deleteOrder: async (req, res) => {
 		try {
-			const { userId } = req.body;
+			await Orders.findByIdAndDelete(req.params.id);
 
-			const order = await Orders.findByIdAndDelete(userId);
-			if (order) {
-				return res.json({ success: 'Order deleted successfully' });
-			}
+			return res.json({ success: 'Order deleted successfully' });
 		} catch (error) {
 			console.log(error);
 		}

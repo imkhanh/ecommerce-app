@@ -7,10 +7,10 @@ const AdminSidebar = () => {
 
 	const links = [
 		{ to: '/admin/dashboard', icon: <BsGrid />, label: 'Dashboard' },
-		{ to: '/admin/products', icon: <BsCollection />, label: 'Products' },
-		{ to: '/admin/categories', icon: <BsBox />, label: 'Categories' },
-		{ to: '/admin/users', icon: <BsPeople />, label: 'Users' },
-		{ to: '/admin/orders', icon: <BsReceipt />, label: 'Orders' },
+		{ to: '/admin/dashboard/products', icon: <BsCollection />, label: 'Products' },
+		{ to: '/admin/dashboard/categories', icon: <BsBox />, label: 'Categories' },
+		{ to: '/admin/dashboard/users', icon: <BsPeople />, label: 'Users' },
+		{ to: '/admin/dashboard/orders', icon: <BsReceipt />, label: 'Orders' },
 	];
 
 	return (

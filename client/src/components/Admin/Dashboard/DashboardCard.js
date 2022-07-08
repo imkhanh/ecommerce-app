@@ -55,7 +55,7 @@ const DashboardCard = () => {
 						<div className="w-12 h-12 rounded-full flex items-center justify-center bg-green-50 text-green-500">
 							<BsReceipt />
 						</div>
-						<span className="text-sm text-green-500">1</span>
+						<span className="text-sm text-green-500">{state ? state.totalData.orders : 0}</span>
 					</div>
 				</div>
 			</div>

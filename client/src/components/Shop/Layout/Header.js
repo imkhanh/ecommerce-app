@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { BsGear, BsHandbag, BsHeart, BsPerson, BsPersonCircle, BsPower, BsReceipt, BsSearch, BsShieldLock } from 'react-icons/bs';
+import { BsGear, BsHandbag, BsHeart, BsPerson, BsPersonCircle, BsPower, BsReceipt, BsShieldLock } from 'react-icons/bs';
+import { IoCloseOutline, IoMenuOutline } from 'react-icons/io5';
 import { Link, useLocation } from 'react-router-dom';
 import { LayoutContext } from './Layout';
 import { isAdmin, isAuth, logout } from '../Auth/Authentication';
@@ -82,14 +83,32 @@ const Header = () => {
 
 	return (
 		<header className="sticky top-0 left-0 w-full bg-white border-b border-gray-200 z-20">
-			<div className="px-8 md:px-4 h-14 flex items-center justify-between">
-				<div className="w-1/6">
+			<div className="relative px-8 md:px-4 h-14 flex items-center justify-between">
+				<div className="hidden md:block">
+					<span onClick={() => dispatch({ type: 'toggleMenu', payload: !state.toggleMenu })} className="cursor-pointer select-none">
+						{state.toggleMenu ? <IoCloseOutline className="text-2xl" /> : <IoMenuOutline className="text-2xl" />}
+					</span>
+					<div className={`${state.toggleMenu ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'} fixed left-0 top-14 w-full h-screen bg-white z-20 transform transition-all duration-300 ease-in-out px-4`}>
+						<ul className="h-full flex flex-col items-center justify-center space-y-12">
+							{menuLinks.map((link) => {
+								return (
+									<li key={link.index}>
+										<Link to={`${link.to}`} onClick={() => dispatch({ type: 'toggleMenu', payload: false })} className="text-2xl font-semibold uppercase hover:italic hover:text-black/70">
+											{link.label}
+										</Link>
+									</li>
+								);
+							})}
+						</ul>
+					</div>
+				</div>
+				<div className="w-1/6 md:w-4/6 md:flex md:items-center md:justify-center">
 					<Link to="/" className="text-sm line-through text-black font-normal uppercase tracking-widest">
 						onedayonething
 					</Link>
 				</div>
-				<div className="w-4/6 flex items-center justify-center">
-					<ul className="flex space-x-10 lg:space-x-6 md:hidden">
+				<div className="w-4/6 flex items-center justify-center md:hidden">
+					<ul className="flex space-x-10 lg:space-x-6">
 						{menuLinks.map((link) => {
 							return (
 								<li key={link.index}>
@@ -102,9 +121,6 @@ const Header = () => {
 					</ul>
 				</div>
 				<div className="w-1/6 flex items-center justify-end space-x-6 md:space-x-4">
-					<div>
-						<BsSearch />
-					</div>
 					<Link to="/user/wish-list">
 						<BsHeart />
 					</Link>

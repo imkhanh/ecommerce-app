@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const path = require('path');
 
 const app = express();
 
@@ -30,6 +31,13 @@ app.use('/api/user', require('./routes/users'));
 app.use('/api/customize', require('./routes/customizes'));
 app.use('/api/braintree', require('./routes/braintree'));
 app.use('/api/order', require('./routes/orders'));
+
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static('client/build'));
+	app.get('*', (req, res) => {
+		res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+	});
+}
 
 //run server
 const PORT = 8000 || process.env.PORT;
